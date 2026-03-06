@@ -7,282 +7,100 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0e0f11;
-    --surface: #16181c;
-    --border: #2a2d34;
-    --accent: #c8f135;
-    --accent-dim: rgba(200,241,53,0.12);
-    --text: #e8eaf0;
-    --muted: #6b7280;
-    --danger: #f87171;
-    --protein: #60a5fa;
-    --carbs: #fb923c;
-    --fat: #a78bfa;
-    --radius: 12px;
+    --bg: #0e0f11; --surface: #16181c; --border: #2a2d34;
+    --accent: #c8f135; --accent-dim: rgba(200,241,53,0.12);
+    --text: #e8eaf0; --muted: #6b7280; --danger: #f87171;
+    --protein: #60a5fa; --carbs: #fb923c; --fat: #a78bfa; --radius: 12px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
-    min-height: 100vh;
-    padding: 24px 16px 60px;
-  }
-  h1 {
-    font-size: 1.8rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--accent);
-  }
-  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+  body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; padding: 24px 16px 60px; max-width: 480px; margin: 0 auto; }
+  h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.03em; color: var(--accent); }
+  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
   .header-date { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--muted); }
-  .setup-banner {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 24px;
-    display: none;
-  }
-  .setup-banner.show { display: block; }
-  .setup-banner h3 { color: var(--accent); font-size: 0.9rem; margin-bottom: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
-  .setup-banner p { color: var(--muted); font-size: 0.82rem; line-height: 1.7; margin-bottom: 10px; }
-  .setup-banner code { background: #1e2026; color: var(--accent); padding: 2px 6px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 0.8rem; }
-  .config-grid { display: grid; gap: 10px; margin-top: 14px; }
-  label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; font-family: 'DM Mono', monospace; }
-  input[type="text"], input[type="password"], textarea, select {
-    width: 100%;
-    background: #0e0f11;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.85rem;
-    padding: 10px 12px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
-  textarea { resize: vertical; min-height: 72px; }
-  select { cursor: pointer; }
-  option { background: #16181c; }
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 16px;
-  }
-  .card-title {
-    font-size: 0.72rem;
-    font-family: 'DM Mono', monospace;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 14px;
-  }
-
-  /* Upload zone */
-  .upload-zone {
-    border: 2px dashed var(--border);
-    border-radius: 10px;
-    padding: 32px 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .upload-zone:hover { border-color: var(--accent); background: var(--accent-dim); }
-  .upload-zone.has-image { padding: 0; border-style: solid; border-color: var(--accent); }
-  .upload-zone img {
-    width: 100%; max-height: 240px; object-fit: cover;
-    border-radius: 8px; display: block;
-  }
-  .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-  .upload-icon { font-size: 2rem; margin-bottom: 8px; }
-  .upload-hint { color: var(--muted); font-size: 0.82rem; font-family: 'DM Mono', monospace; }
-  .remove-img {
-    position: absolute; top: 8px; right: 8px;
-    background: rgba(0,0,0,0.7); color: #fff;
-    border: none; border-radius: 50%;
-    width: 28px; height: 28px; cursor: pointer;
-    font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
-  }
-
-  .meal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-
-  /* Buttons */
-  .btn {
-    width: 100%; padding: 14px;
-    border: none; border-radius: 10px;
-    font-family: 'Syne', sans-serif;
-    font-size: 0.95rem; font-weight: 700;
-    cursor: pointer; transition: all 0.15s;
-    letter-spacing: 0.02em;
-  }
-  .btn-primary { background: var(--accent); color: #0e0f11; }
-  .btn-primary:hover { background: #d4f54a; transform: translateY(-1px); }
-  .btn-primary:active { transform: translateY(0); }
-  .btn-primary:disabled { background: #3a3d42; color: var(--muted); cursor: not-allowed; transform: none; }
-  .btn-secondary {
-    background: transparent; color: var(--accent);
-    border: 1px solid var(--accent); margin-top: 8px;
-  }
-  .btn-secondary:hover { background: var(--accent-dim); }
-  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); margin-top: 8px; }
-  .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
-
-  /* Result panel */
-  .result-panel { display: none; }
-  .result-panel.show { display: block; }
-  .macro-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 14px 0;
-  }
-  .macro-item {
-    background: #0e0f11; border-radius: 8px; padding: 12px;
-    border: 1px solid var(--border);
-  }
-  .macro-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-bottom: 4px; }
-  .macro-value { font-size: 1.4rem; font-weight: 800; }
-  .macro-value.cal { color: var(--accent); }
-  .macro-value.protein { color: var(--protein); }
-  .macro-value.carbs { color: var(--carbs); }
-  .macro-value.fat { color: var(--fat); }
-  .macro-unit { font-size: 0.75rem; font-weight: 400; color: var(--muted); }
-  .meal-name-result {
-    font-size: 1rem; font-weight: 700; color: var(--text);
-    background: #0e0f11; border-radius: 8px; padding: 10px 12px;
-    border: 1px solid var(--border); margin-bottom: 4px;
-    font-family: 'DM Mono', monospace;
-  }
-
-  /* Progress bars */
-  .progress-section { margin-top: 4px; }
-  .progress-row { margin-bottom: 12px; }
-  .progress-row-header {
-    display: flex; justify-content: space-between;
-    font-family: 'DM Mono', monospace; font-size: 0.78rem;
-    margin-bottom: 6px;
-  }
-  .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-  .progress-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
-  .fill-cal { background: var(--accent); }
-  .fill-protein { background: var(--protein); }
-  .fill-carbs { background: var(--carbs); }
-  .fill-fat { background: var(--fat); }
-  .over { color: var(--danger) !important; }
-
-  /* Status */
-  .status {
-    font-family: 'DM Mono', monospace; font-size: 0.82rem;
-    padding: 10px 14px; border-radius: 8px; margin-top: 10px;
-    display: none;
-  }
-  .status.show { display: block; }
-  .status.loading { background: var(--accent-dim); color: var(--accent); }
-  .status.success { background: rgba(34,197,94,0.12); color: #4ade80; }
-  .status.error { background: rgba(248,113,113,0.12); color: var(--danger); }
-
-  .spinner {
-    display: inline-block; width: 12px; height: 12px;
-    border: 2px solid currentColor; border-top-color: transparent;
-    border-radius: 50%; animation: spin 0.7s linear infinite;
-    margin-right: 6px; vertical-align: middle;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .divider { height: 1px; background: var(--border); margin: 16px 0; }
-
-  .auth-btn {
-    display: flex; align-items: center; gap: 10px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 8px; padding: 10px 14px;
-    color: var(--text); font-family: 'DM Mono', monospace;
-    font-size: 0.82rem; cursor: pointer; transition: border-color 0.2s;
-    width: 100%;
-  }
-  .auth-btn:hover { border-color: var(--accent); }
-  .auth-status { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-top: 6px; }
-  .auth-status.ok { color: #4ade80; }
-
-  .editable-macros { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin: 10px 0; }
-  .editable-macros input { font-size: 0.9rem; padding: 8px 10px; }
-
-  .today-log { margin-top: 4px; }
-  .log-entry {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 8px 0; border-bottom: 1px solid var(--border);
-    font-size: 0.82rem;
-  }
-  .log-entry:last-child { border-bottom: none; }
-  .log-entry-name { color: var(--text); font-weight: 600; }
-  .log-entry-cal { font-family: 'DM Mono', monospace; color: var(--accent); font-size: 0.82rem; }
-  .log-entry-time { font-family: 'DM Mono', monospace; color: var(--muted); font-size: 0.72rem; }
-  .empty-log { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.82rem; text-align: center; padding: 20px; }
-
-  .inline-row { display: flex; gap: 8px; }
-  .inline-row .btn { flex: 1; }
-
-  /* Tabs */
   .tabs { display: flex; gap: 4px; margin-bottom: 16px; background: var(--surface); border-radius: 10px; padding: 4px; border: 1px solid var(--border); }
-  .tab-btn {
-    flex: 1; padding: 10px; border: none; border-radius: 7px;
-    font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700;
-    cursor: pointer; transition: all 0.15s; background: transparent; color: var(--muted);
-  }
+  .tab-btn { flex: 1; padding: 10px; border: none; border-radius: 7px; font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.15s; background: transparent; color: var(--muted); }
   .tab-btn.active { background: var(--accent); color: #0e0f11; }
   .tab-btn:not(.active):hover { color: var(--text); }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
-  /* History date nav */
-  .date-nav {
-    display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+  .card-title { font-size: 0.72rem; font-family: 'DM Mono', monospace; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+
+  label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; font-family: 'DM Mono', monospace; }
+  input, select {
+    width: 100%; background: #0e0f11; border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-family: 'DM Mono', monospace;
+    font-size: 0.9rem; padding: 10px 12px; outline: none; transition: border-color 0.2s;
   }
-  .date-nav-btn {
-    background: var(--surface); border: 1px solid var(--border);
-    color: var(--text); border-radius: 8px; width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 1rem; transition: border-color 0.2s; flex-shrink: 0;
-  }
+  input:focus, select:focus { border-color: var(--accent); }
+  select { cursor: pointer; } option { background: #16181c; }
+  .field { margin-bottom: 12px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .row4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .macro-input input { text-align: center; font-size: 1rem; font-weight: 700; padding: 12px 4px; }
+  .macro-input label { text-align: center; }
+  .macro-input.cal input  { color: var(--accent); }
+  .macro-input.prot input { color: var(--protein); }
+  .macro-input.carb input { color: var(--carbs); }
+  .macro-input.fat  input { color: var(--fat); }
+
+  .btn { width: 100%; padding: 14px; border: none; border-radius: 10px; font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.15s; letter-spacing: 0.02em; }
+  .btn-primary { background: var(--accent); color: #0e0f11; }
+  .btn-primary:hover { background: #d4f54a; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:disabled { background: #3a3d42; color: var(--muted); cursor: not-allowed; transform: none; }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+
+  .status { font-family: 'DM Mono', monospace; font-size: 0.82rem; padding: 10px 14px; border-radius: 8px; margin-top: 10px; display: none; }
+  .status.show { display: block; }
+  .status.loading { background: var(--accent-dim); color: var(--accent); }
+  .status.success { background: rgba(34,197,94,0.12); color: #4ade80; }
+  .status.error   { background: rgba(248,113,113,0.12); color: var(--danger); }
+  .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 6px; vertical-align: middle; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .cal-big { font-size: 2.4rem; font-weight: 800; color: var(--accent); line-height: 1; }
+  .cal-goal { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--muted); margin-top: 4px; margin-bottom: 18px; }
+  .progress-row { margin-bottom: 14px; }
+  .progress-row-header { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.78rem; margin-bottom: 6px; }
+  .progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+  .fill-cal { background: var(--accent); } .fill-protein { background: var(--protein); }
+  .fill-carbs { background: var(--carbs); } .fill-fat { background: var(--fat); }
+  .over { color: var(--danger) !important; }
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  .log-entry { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .log-entry:last-child { border-bottom: none; }
+  .log-entry-name { font-weight: 700; font-size: 0.9rem; }
+  .log-entry-type { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+  .log-entry-macros { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+  .log-entry-cal { font-family: 'DM Mono', monospace; color: var(--accent); font-weight: 700; text-align: right; }
+  .empty-log { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.82rem; text-align: center; padding: 24px; }
+
+  .date-nav { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .date-nav-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: border-color 0.2s; flex-shrink: 0; }
   .date-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
   .date-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-  .date-nav-input {
-    flex: 1; padding: 8px 10px !important;
-    background: #0e0f11 !important;
-  }
-  .hist-badge {
-    display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.72rem;
-    background: var(--accent-dim); color: var(--accent); border-radius: 4px;
-    padding: 2px 7px; margin-left: 6px;
-  }
-  .hist-summary {
-    display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin-bottom: 14px;
-  }
-  .hist-macro {
-    background: #0e0f11; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px;
-  }
+  input[type="date"] { flex: 1; }
+
+  .auth-btn { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.82rem; cursor: pointer; transition: border-color 0.2s; width: 100%; }
+  .auth-btn:hover { border-color: var(--accent); }
+  .auth-status { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-top: 6px; }
+  .auth-status.ok { color: #4ade80; }
+
+  .setup-note { color: var(--muted); font-size: 0.8rem; line-height: 1.7; margin-bottom: 12px; }
+  .setup-note code { background: #1e2026; color: var(--accent); padding: 2px 6px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 0.78rem; }
+  .config-grid { display: grid; gap: 10px; }
+
+  .hist-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .hist-macro { background: #0e0f11; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
   .hist-macro-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-bottom: 2px; }
   .hist-macro-val { font-size: 1.1rem; font-weight: 800; }
-
-  .ai-reasoning {
-    background: #0e0f11;
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 8px;
-    padding: 12px 14px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--muted);
-    line-height: 1.8;
-    white-space: pre-wrap;
-  }
-
-  @media (max-width: 380px) {
-    .macro-grid { grid-template-columns: 1fr 1fr; }
-  }
+  .hist-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.72rem; background: var(--accent-dim); color: var(--accent); border-radius: 4px; padding: 2px 7px; margin-left: 6px; }
 </style>
 </head>
 <body>
@@ -293,248 +111,145 @@
 </div>
 
 <div class="tabs">
-  <button class="tab-btn active" id="tabLog" onclick="switchTab('log')">Log Meal</button>
-  <button class="tab-btn" id="tabToday" onclick="switchTab('today')">Today</button>
-  <button class="tab-btn" id="tabHistory" onclick="switchTab('history')">History</button>
+  <button class="tab-btn active" id="tabLog"      onclick="switchTab('log')">Log</button>
+  <button class="tab-btn"        id="tabToday"    onclick="switchTab('today')">Today</button>
+  <button class="tab-btn"        id="tabHistory"  onclick="switchTab('history')">History</button>
+  <button class="tab-btn"        id="tabSettings" onclick="switchTab('settings')">⚙</button>
 </div>
 
-<!-- TAB: LOG -->
+<!-- ══ LOG ══ -->
 <div id="tab-log" class="tab-panel active">
-
-<!-- Setup instructions (shown if not configured) -->
-<div class="setup-banner" id="setupBanner">
-  <h3>⚙ First-Time Setup</h3>
-  <p>Fill in the 3 fields below and you're ready to go. Here's how to get each value:</p>
-  <p>
-    <strong>1. OpenRouter API Key</strong> → sign up free at <code>openrouter.ai</code> → Keys → Create key (starts with <code>sk-or-...</code>)<br>
-    <strong>2. Google Client ID</strong> → go to <code>console.cloud.google.com</code> → APIs & Services → Credentials → Create OAuth 2.0 Client ID (Web application). In "Authorised JavaScript origins" add your page's URL (e.g. <code>https://yourdomain.com</code> or <code>http://localhost:8080</code>). Copy the Client ID.<br>
-    Also enable <strong>Google Sheets API</strong> in the same project.<br>
-    <strong>3. Spreadsheet ID</strong> → open your Google Sheet, copy the long ID from the URL: <code>docs.google.com/spreadsheets/d/<u>THIS_PART</u>/edit</code>
-  </p>
-  <div class="config-grid">
-    <div>
-      <label>OpenRouter API Key</label>
-      <input type="password" id="cfgClaudeKey" placeholder="sk-or-...">
+  <div class="card">
+    <div class="card-title">New Entry</div>
+    <div class="row2">
+      <div class="field"><label>Date</label><input type="date" id="mealDate"></div>
+      <div class="field">
+        <label>Meal</label>
+        <select id="mealType">
+          <option>Breakfast</option><option>Lunch</option>
+          <option>Dinner</option><option>Snack</option>
+        </select>
+      </div>
     </div>
-    <div>
-      <label>Google OAuth Client ID</label>
-      <input type="text" id="cfgGoogleClientId" placeholder="xxxxx.apps.googleusercontent.com">
+    <div class="field">
+      <label>Description</label>
+      <input type="text" id="mealDesc" placeholder="e.g. Chicken 250g, buckwheat 200g">
     </div>
-    <div>
-      <label>Spreadsheet ID</label>
-      <input type="text" id="cfgSheetId" placeholder="1BxiMVs0XRA...">
+    <div class="row4">
+      <div class="macro-input cal"> <label>Kcal</label>   <input type="number" id="inCal"   min="0" placeholder="0"></div>
+      <div class="macro-input prot"><label>Protein</label><input type="number" id="inProt"  min="0" placeholder="0"></div>
+      <div class="macro-input carb"><label>Carbs</label>  <input type="number" id="inCarbs" min="0" placeholder="0"></div>
+      <div class="macro-input fat"> <label>Fat</label>    <input type="number" id="inFat"   min="0" placeholder="0"></div>
     </div>
-    <button class="btn btn-primary" onclick="saveConfig()">Save Configuration</button>
+    <button class="btn btn-primary" id="logBtn" onclick="logEntry()">➕ Add to Sheet</button>
+    <div class="status" id="logStatus"></div>
   </div>
 </div>
 
-<!-- Google auth -->
-<div class="card" id="authCard" style="display:none">
-  <div class="card-title">Google Account</div>
-  <button class="auth-btn" onclick="handleAuth()">
-    <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-    Sign in with Google
-  </button>
-  <div class="auth-status" id="authStatus">Not signed in</div>
-</div>
-
-<!-- Log new meal -->
-<div class="card">
-  <div class="card-title">Log a Meal</div>
-
-  <div class="meal-row">
-    <div>
-      <label>Date</label>
-      <input type="text" id="mealDate" readonly>
-    </div>
-    <div>
-      <label>Meal</label>
-      <select id="mealType">
-        <option>Breakfast</option>
-        <option>Lunch</option>
-        <option selected>Dinner</option>
-        <option>Snack</option>
-      </select>
-    </div>
-  </div>
-
-  <div style="margin-bottom:12px">
-    <label>Description (optional — add detail for better accuracy)</label>
-    <textarea id="foodDesc" placeholder="e.g. grilled chicken breast ~200g, side of rice, some veggies..."></textarea>
-  </div>
-
-  <label style="margin-bottom:8px">Photo (optional but helps)</label>
-  <div class="upload-zone" id="uploadZone">
-    <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="handlePhoto(this)">
-    <div id="uploadPlaceholder">
-      <div class="upload-icon">📷</div>
-      <div class="upload-hint">Tap to take photo or upload</div>
-    </div>
-    <img id="photoPreview" style="display:none">
-    <button class="remove-img" id="removeBtn" onclick="removePhoto(event)" style="display:none">✕</button>
-  </div>
-
-  <div style="height:14px"></div>
-  <button class="btn btn-primary" id="analyzeBtn" onclick="analyze()">Analyze with AI</button>
-
-  <div class="status" id="analyzeStatus"></div>
-</div>
-
-<!-- Result panel -->
-<div class="result-panel card" id="resultPanel">
-  <div class="card-title">AI Analysis — edit if needed</div>
-  <div>
-    <label>Meal name</label>
-    <input type="text" id="resultMealName" class="meal-name-result">
-  </div>
-  <div class="editable-macros">
-    <div>
-      <label>Calories (kcal)</label>
-      <input type="number" id="editCal" min="0">
-    </div>
-    <div>
-      <label>Protein (g)</label>
-      <input type="number" id="editProtein" min="0">
-    </div>
-    <div>
-      <label>Carbs (g)</label>
-      <input type="number" id="editCarbs" min="0">
-    </div>
-    <div>
-      <label>Fat (g)</label>
-      <input type="number" id="editFat" min="0">
-    </div>
-  </div>
-  <div class="inline-row">
-    <button class="btn btn-primary" onclick="logToSheet()">✓ Log to Sheet</button>
-    <button class="btn btn-ghost" onclick="discardResult()">Discard</button>
-  </div>
-  <div style="display:none;margin-top:14px">
-    <div class="card-title" style="margin-bottom:8px">🧠 AI Breakdown</div>
-    <div id="aiReasoning" class="ai-reasoning"></div>
-  </div>
-  <div class="status" id="logStatus"></div>
-</div>
-
-<!-- close log tab -->
-</div>
+<!-- ══ TODAY ══ -->
 <div id="tab-today" class="tab-panel">
   <div class="card">
-    <div class="card-title">Today's Progress</div>
-    <div class="progress-section" id="progressSection">
-      <div class="progress-row">
-        <div class="progress-row-header">
-          <span>Calories</span>
-          <span id="pCalText" class="macro-value cal" style="font-size:0.9rem">— / 2429</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill fill-cal" id="pCalBar" style="width:0%"></div></div>
-      </div>
-      <div class="progress-row">
-        <div class="progress-row-header">
-          <span>Protein</span>
-          <span id="pProtText" style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--protein)">— / 180g</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill fill-protein" id="pProtBar" style="width:0%"></div></div>
-      </div>
-      <div class="progress-row">
-        <div class="progress-row-header">
-          <span>Carbs</span>
-          <span id="pCarbText" style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--carbs)">— / 281g</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill fill-carbs" id="pCarbBar" style="width:0%"></div></div>
-      </div>
-      <div class="progress-row">
-        <div class="progress-row-header">
-          <span>Fat</span>
-          <span id="pFatText" style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--fat)">— / 65g</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill fill-fat" id="pFatBar" style="width:0%"></div></div>
-      </div>
+    <div class="cal-big" id="todayCalBig">0</div>
+    <div class="cal-goal" id="todayCalGoal">of 2429 kcal</div>
+    <div class="progress-row">
+      <div class="progress-row-header"><span>Calories</span><span id="pCalText"  style="color:var(--accent);font-family:'DM Mono',monospace;font-size:0.78rem">0 / 2429</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-cal"     id="pCalBar"  style="width:0%"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-row-header"><span>Protein</span><span id="pProtText" style="color:var(--protein);font-family:'DM Mono',monospace;font-size:0.78rem">0 / 180g</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-protein" id="pProtBar" style="width:0%"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-row-header"><span>Carbs</span><span id="pCarbText"  style="color:var(--carbs);font-family:'DM Mono',monospace;font-size:0.78rem">0 / 281g</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-carbs"   id="pCarbBar" style="width:0%"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-row-header"><span>Fat</span><span id="pFatText"     style="color:var(--fat);font-family:'DM Mono',monospace;font-size:0.78rem">0 / 65g</span></div>
+      <div class="progress-bar"><div class="progress-fill fill-fat"     id="pFatBar"  style="width:0%"></div></div>
     </div>
     <div class="divider"></div>
-    <div class="card-title">Today's Entries</div>
-    <div class="today-log" id="todayLog">
-      <div class="empty-log">No entries yet today</div>
-    </div>
-    <button class="btn btn-ghost" style="margin-top:12px;font-size:0.8rem" onclick="loadTodayData()">↻ Refresh</button>
+    <div class="card-title">Entries</div>
+    <div id="todayLog"><div class="empty-log">No entries yet</div></div>
+    <button class="btn btn-ghost" style="margin-top:12px;font-size:0.8rem" onclick="loadDate(formatDate(new Date()),'today')">↻ Refresh</button>
   </div>
 </div>
 
-<!-- TAB: HISTORY -->
+<!-- ══ HISTORY ══ -->
 <div id="tab-history" class="tab-panel">
   <div class="card">
-    <div class="card-title">Browse History</div>
     <div class="date-nav">
-      <button class="date-nav-btn" id="histPrev" onclick="changeHistDate(-1)" title="Previous day">‹</button>
-      <input type="date" id="histDatePicker" class="date-nav-input" onchange="loadHistoryDate()">
-      <button class="date-nav-btn" id="histNext" onclick="changeHistDate(1)" title="Next day">›</button>
+      <button class="date-nav-btn" onclick="changeHistDate(-1)">‹</button>
+      <input type="date" id="histDatePicker" onchange="loadDate(this.value,'history')">
+      <button class="date-nav-btn" id="histNext" onclick="changeHistDate(1)">›</button>
     </div>
-    <div id="histContent">
-      <div class="empty-log">Sign in with Google and pick a date</div>
-    </div>
+    <div id="histContent"><div class="empty-log">Pick a date to view</div></div>
   </div>
 </div>
 
-<!-- Google Identity Services -->
+<!-- ══ SETTINGS ══ -->
+<div id="tab-settings" class="tab-panel">
+  <div class="card">
+    <div class="card-title">Google Sheets Setup</div>
+    <p class="setup-note">
+      <strong>Client ID</strong> → <code>console.cloud.google.com</code> → APIs &amp; Services → Credentials → OAuth 2.0 Client ID (Web application). Add your GitHub Pages URL to Authorised JavaScript Origins. Enable <strong>Google Sheets API</strong> in the same project.<br><br>
+      <strong>Spreadsheet ID</strong> → the long string in your Sheet URL:<br>
+      <code>spreadsheets/d/<u>THIS_PART</u>/edit</code>
+    </p>
+    <div class="config-grid">
+      <div class="field"><label>Google OAuth Client ID</label><input type="text" id="cfgClientId" placeholder="xxxxx.apps.googleusercontent.com"></div>
+      <div class="field"><label>Spreadsheet ID</label><input type="text" id="cfgSheetId" placeholder="1BxiMVs0XRA5..."></div>
+      <button class="btn btn-primary" onclick="saveConfig()">Save</button>
+    </div>
+    <div class="status" id="cfgStatus"></div>
+  </div>
+
+  <div class="card" id="authCard" style="display:none">
+    <div class="card-title">Google Account</div>
+    <button class="auth-btn" onclick="handleAuth()">
+      <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Sign in with Google
+    </button>
+    <div class="auth-status" id="authStatus">Not signed in</div>
+  </div>
+</div>
+
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://apis.google.com/js/api.js"></script>
-
 <script>
-// ─── CONFIG (saved to localStorage) ──────────────────────────
-const CFG_KEY = 'fuellog_config';
-let cfg = {};
-let googleToken = null;
-let gapiReady = false;
+const GOALS = { cal:2429, protein:180, carbs:281, fat:65 };
+const CFG_KEY = 'fuellog_cfg';
+let cfg = {}, googleToken = null, gapiReady = false, tokenClient;
 
-// Goals (hardcoded to match your sheet)
-const GOALS = { cal: 2429, protein: 180, carbs: 281, fat: 65 };
-
-function loadConfig() {
-  try { cfg = JSON.parse(localStorage.getItem(CFG_KEY) || '{}'); } catch(e) { cfg = {}; }
-}
-
-function saveConfig() {
-  cfg.claudeKey = document.getElementById('cfgClaudeKey').value.trim();
-  cfg.googleClientId = document.getElementById('cfgGoogleClientId').value.trim();
-  cfg.sheetId = document.getElementById('cfgSheetId').value.trim();
-  if (!cfg.claudeKey || !cfg.googleClientId || !cfg.sheetId) {
-    alert('Please fill in all three fields.'); return;
-  }
-  localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
-  document.getElementById('setupBanner').classList.remove('show');
-  document.getElementById('authCard').style.display = 'block';
-  initGoogle();
-}
-
-// ─── INIT ──────────────────────────────────────────────────────
 function init() {
-  loadConfig();
+  try { cfg = JSON.parse(localStorage.getItem(CFG_KEY)||'{}'); } catch(e) { cfg={}; }
+
   const today = new Date();
   document.getElementById('headerDate').textContent = today.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
   document.getElementById('mealDate').value = formatDate(today);
-  // Auto-select meal based on time
+  document.getElementById('histDatePicker').value = formatDate(today);
+
   const h = today.getHours();
   const sel = document.getElementById('mealType');
-  if (h < 10) sel.value = 'Breakfast';
-  else if (h < 14) sel.value = 'Lunch';
-  else if (h < 18) sel.value = 'Dinner';
-  else sel.value = 'Snack';
+  if (h < 10) sel.value='Breakfast'; else if (h < 14) sel.value='Lunch';
+  else if (h < 20) sel.value='Dinner'; else sel.value='Snack';
 
-  if (!cfg.claudeKey || !cfg.googleClientId || !cfg.sheetId) {
-    document.getElementById('setupBanner').classList.add('show');
-    document.getElementById('authCard').style.display = 'none';
-    // Pre-fill saved values
-    if (cfg.claudeKey) document.getElementById('cfgClaudeKey').value = cfg.claudeKey;
-    if (cfg.googleClientId) document.getElementById('cfgGoogleClientId').value = cfg.googleClientId;
-    if (cfg.sheetId) document.getElementById('cfgSheetId').value = cfg.sheetId;
-  } else {
+  if (cfg.clientId) document.getElementById('cfgClientId').value = cfg.clientId;
+  if (cfg.sheetId)  document.getElementById('cfgSheetId').value  = cfg.sheetId;
+  if (cfg.clientId && cfg.sheetId) {
     document.getElementById('authCard').style.display = 'block';
     initGoogle();
   }
 }
 
-// ─── GOOGLE AUTH ───────────────────────────────────────────────
-let tokenClient;
+function saveConfig() {
+  cfg.clientId = document.getElementById('cfgClientId').value.trim();
+  cfg.sheetId  = document.getElementById('cfgSheetId').value.trim();
+  if (!cfg.clientId || !cfg.sheetId) { alert('Fill in both fields.'); return; }
+  localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
+  document.getElementById('authCard').style.display = 'block';
+  setStatus('cfgStatus','success','✓ Saved — now sign in below');
+  initGoogle();
+}
 
 function initGoogle() {
   gapi.load('client', async () => {
@@ -545,16 +260,16 @@ function initGoogle() {
 }
 
 function handleAuth() {
-  if (!cfg.googleClientId) { alert('Save configuration first.'); return; }
+  if (!cfg.clientId) { alert('Save config first.'); return; }
   tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: cfg.googleClientId,
+    client_id: cfg.clientId,
     scope: 'https://www.googleapis.com/auth/spreadsheets',
     callback: (resp) => {
-      if (resp.error) { setAuthStatus('Error: ' + resp.error, false); return; }
+      if (resp.error) { setAuthStatus('Error: '+resp.error, false); return; }
       googleToken = resp.access_token;
       gapi.client.setToken({ access_token: googleToken });
       setAuthStatus('✓ Signed in', true);
-      loadTodayData();
+      loadDate(formatDate(new Date()), 'today');
     }
   });
   tokenClient.requestAccessToken();
@@ -562,310 +277,135 @@ function handleAuth() {
 
 function setAuthStatus(msg, ok) {
   const el = document.getElementById('authStatus');
-  el.textContent = msg;
-  el.className = 'auth-status' + (ok ? ' ok' : '');
+  el.textContent = msg; el.className = 'auth-status'+(ok?' ok':'');
 }
 
-// ─── PHOTO HANDLING ────────────────────────────────────────────
-let photoBase64 = null;
-let photoMimeType = null;
+async function logEntry() {
+  if (!googleToken) { alert('Sign in with Google first (⚙ Settings tab).'); return; }
+  if (!gapiReady)   { alert('Google API loading, try again in a moment.'); return; }
 
-function handlePhoto(input) {
-  const file = input.files[0];
-  if (!file) return;
-  photoMimeType = file.type || 'image/jpeg';
-  const reader = new FileReader();
-  reader.onload = e => {
-    const data = e.target.result;
-    photoBase64 = data.split(',')[1];
-    document.getElementById('photoPreview').src = data;
-    document.getElementById('photoPreview').style.display = 'block';
-    document.getElementById('uploadPlaceholder').style.display = 'none';
-    document.getElementById('removeBtn').style.display = 'flex';
-    document.getElementById('uploadZone').classList.add('has-image');
-  };
-  reader.readAsDataURL(file);
-}
+  const desc  = document.getElementById('mealDesc').value.trim();
+  const cal   = Number(document.getElementById('inCal').value)   || 0;
+  const prot  = Number(document.getElementById('inProt').value)  || 0;
+  const carbs = Number(document.getElementById('inCarbs').value) || 0;
+  const fat   = Number(document.getElementById('inFat').value)   || 0;
 
-function removePhoto(e) {
-  e.stopPropagation();
-  photoBase64 = null;
-  document.getElementById('photoInput').value = '';
-  document.getElementById('photoPreview').style.display = 'none';
-  document.getElementById('uploadPlaceholder').style.display = 'block';
-  document.getElementById('removeBtn').style.display = 'none';
-  document.getElementById('uploadZone').classList.remove('has-image');
-}
+  if (!desc && !cal) { alert('Add a description or calories.'); return; }
 
-// ─── AI ANALYSIS (OpenRouter) ─────────────────────────────────
-async function analyze() {
-  if (!cfg.claudeKey) { alert('Add your OpenRouter API key in the setup section.'); return; }
-  const desc = document.getElementById('foodDesc').value.trim();
-  if (!photoBase64 && !desc) { alert('Please add a photo or description.'); return; }
-
-  setStatus('analyzeStatus', 'loading', '⏳ Analyzing with AI...');
-  document.getElementById('analyzeBtn').disabled = true;
-  document.getElementById('resultPanel').classList.remove('show');
-
-  const prompt = `You are a precise nutrition calculator. Analyze the food and return ONLY a valid JSON object.
-
-Rules:
-- Track ALL 4 macros (protein, carbs, fat, calories) for EVERY ingredient — never skip a macro even if it seems small
-- Buckwheat, rice, oats etc. DO have protein and fat — include them
-- Chicken, meat etc. DO have small amounts of carbs sometimes — check carefully
-- The final JSON numbers MUST exactly match the totals in your reasoning — double check before returning
-- Use standard nutritional databases (per 100g cooked unless stated otherwise)
-
-Return this exact JSON (no markdown, no text outside it):
-{"meal_name":"short name","calories":number,"protein_g":number,"carbs_g":number,"fat_g":number,"reasoning":"For each ingredient show: NAME Xg → per 100g: Pc protein / Cc carbs / Ff fat / Kkcal → scaled: Ps protein / Cs carbs / Fs fat / Ks kcal. Then: TOTAL = sum each macro explicitly."}
-
-${desc ? 'Food: ' + desc : 'Analyze the food in the image.'}
-
-After writing the reasoning, verify: calories/protein_g/carbs_g/fat_g in the JSON exactly equal the TOTAL line in reasoning.`;
-
-  const contentParts = [];
-  if (photoBase64) {
-    contentParts.push({ type: 'image_url', image_url: { url: `data:${photoMimeType};base64,${photoBase64}` } });
-  }
-  contentParts.push({ type: 'text', text: prompt });
-
-  try {
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${cfg.claudeKey}`,
-        'HTTP-Referer': window.location.href,
-        'X-Title': 'Fuel Log'
-      },
-      body: JSON.stringify({
-        model: 'openrouter/free',
-        messages: [{ role: 'user', content: contentParts }]
-      })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error?.message || 'API error');
-    const raw = data.choices?.[0]?.message?.content || '';
-    // Extract JSON block robustly
-    const match = raw.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error('No JSON found in response');
-    // Strip control characters that break JSON (except \n \r \t)
-    const cleaned = match[0].replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, ' ');
-    const parsed = JSON.parse(cleaned);
-    showResult(parsed);
-    setStatus('analyzeStatus', 'success', '✓ Analysis complete');
-  } catch (err) {
-    setStatus('analyzeStatus', 'error', '✗ ' + err.message);
-  } finally {
-    document.getElementById('analyzeBtn').disabled = false;
-  }
-}
-
-function showResult(data) {
-  document.getElementById('resultMealName').value = data.meal_name || 'Unknown meal';
-  document.getElementById('editCal').value = data.calories || 0;
-  document.getElementById('editProtein').value = data.protein_g || 0;
-  document.getElementById('editCarbs').value = data.carbs_g || 0;
-  document.getElementById('editFat').value = data.fat_g || 0;
-
-  const reasoningEl = document.getElementById('aiReasoning');
-  if (data.reasoning) {
-    reasoningEl.textContent = data.reasoning;
-    reasoningEl.parentElement.style.display = 'block';
-  } else {
-    reasoningEl.parentElement.style.display = 'none';
-  }
-
-  document.getElementById('resultPanel').classList.add('show');
-}
-
-function discardResult() {
-  document.getElementById('resultPanel').classList.remove('show');
-  document.getElementById('analyzeStatus').classList.remove('show');
-}
-
-// ─── LOG TO SHEET ──────────────────────────────────────────────
-async function logToSheet() {
-  if (!googleToken) { alert('Sign in with Google first.'); return; }
-  if (!gapiReady) { alert('Google API still loading, try again in a moment.'); return; }
-
-  const row = [
-    document.getElementById('mealDate').value,
-    document.getElementById('mealType').value,
-    document.getElementById('resultMealName').value,
-    Number(document.getElementById('editCal').value),
-    Number(document.getElementById('editProtein').value),
-    Number(document.getElementById('editCarbs').value),
-    Number(document.getElementById('editFat').value),
-  ];
-
-  setStatus('logStatus', 'loading', '⏳ Logging to Google Sheets...');
+  setStatus('logStatus','loading','⏳ Saving...');
+  document.getElementById('logBtn').disabled = true;
 
   try {
     await gapi.client.sheets.spreadsheets.values.append({
       spreadsheetId: cfg.sheetId,
       range: 'Meals!A:G',
       valueInputOption: 'USER_ENTERED',
-      resource: { values: [row] }
+      resource: { values: [[ document.getElementById('mealDate').value, document.getElementById('mealType').value, desc, cal, prot, carbs, fat ]] }
     });
-    setStatus('logStatus', 'success', '✓ Logged successfully!');
-    setTimeout(() => {
-      discardResult();
-      document.getElementById('foodDesc').value = '';
-      removePhoto({ stopPropagation: ()=>{} });
-      loadTodayData();
-    }, 1200);
-  } catch (err) {
-    setStatus('logStatus', 'error', '✗ ' + (err.result?.error?.message || err.message || 'Sheet error'));
+    setStatus('logStatus','success','✓ Logged!');
+    document.getElementById('mealDesc').value = '';
+    ['inCal','inProt','inCarbs','inFat'].forEach(id => document.getElementById(id).value = '');
+  } catch(err) {
+    setStatus('logStatus','error','✗ '+(err.result?.error?.message || err.message));
+  } finally {
+    document.getElementById('logBtn').disabled = false;
   }
 }
 
-// ─── TODAY'S DATA ──────────────────────────────────────────────
-async function loadTodayData() {
+async function loadDate(date, target) {
   if (!googleToken || !gapiReady) return;
-  const today = formatDate(new Date());
   try {
-    const res = await gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: cfg.sheetId,
-      range: 'Meals!A:G'
-    });
-    const rows = (res.result.values || []).slice(1); // skip header
-    const todayRows = rows.filter(r => r[0] === today);
-    renderTodayLog(todayRows);
-    updateProgress(todayRows);
-  } catch (e) {
-    console.warn('Could not load today data:', e);
-  }
+    const res = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: cfg.sheetId, range: 'Meals!A:G' });
+    const rows = (res.result.values||[]).slice(1).filter(r => r[0]===date);
+    if (target==='today') renderToday(rows);
+    else renderHistory(date, rows);
+  } catch(e) { console.warn('Load failed',e); }
 }
 
-function renderTodayLog(rows) {
-  const el = document.getElementById('todayLog');
-  if (!rows.length) { el.innerHTML = '<div class="empty-log">No entries yet today</div>'; return; }
-  el.innerHTML = rows.map(r => `
-    <div class="log-entry">
-      <div>
-        <div class="log-entry-name">${r[2] || r[1] || 'Meal'}</div>
-        <div class="log-entry-time">${r[1] || ''}</div>
-      </div>
-      <div class="log-entry-cal">${r[3] || 0} kcal</div>
-    </div>
-  `).join('');
+function renderToday(rows) {
+  const s = sum(rows);
+  document.getElementById('todayCalBig').textContent = Math.round(s.cal);
+  setBar('pCalBar','pCalText',s.cal,GOALS.cal,'',true);
+  setBar('pProtBar','pProtText',s.protein,GOALS.protein,'g',false);
+  setBar('pCarbBar','pCarbText',s.carbs,GOALS.carbs,'g',false);
+  setBar('pFatBar','pFatText',s.fat,GOALS.fat,'g',false);
+  document.getElementById('todayLog').innerHTML = rows.length ? rows.map(entryHTML).join('') : '<div class="empty-log">No entries yet</div>';
 }
 
-function updateProgress(rows) {
-  const sum = { cal: 0, protein: 0, carbs: 0, fat: 0 };
-  rows.forEach(r => {
-    sum.cal += Number(r[3]) || 0;
-    sum.protein += Number(r[4]) || 0;
-    sum.carbs += Number(r[5]) || 0;
-    sum.fat += Number(r[6]) || 0;
-  });
-
-  setBar('pCalBar', 'pCalText', sum.cal, GOALS.cal, 'kcal', true);
-  setBar('pProtBar', 'pProtText', sum.protein, GOALS.protein, 'g', false);
-  setBar('pCarbBar', 'pCarbText', sum.carbs, GOALS.carbs, 'g', false);
-  setBar('pFatBar', 'pFatText', sum.fat, GOALS.fat, 'g', false);
-}
-
-function setBar(barId, textId, val, goal, unit, isCal) {
-  const pct = Math.min(Math.round(val / goal * 100), 100);
-  document.getElementById(barId).style.width = pct + '%';
-  const over = val > goal;
-  const t = document.getElementById(textId);
-  t.textContent = `${Math.round(val)} / ${goal}${isCal ? '' : unit}`;
-  t.classList.toggle('over', over);
-}
-
-// ─── TABS ──────────────────────────────────────────────────────
-function switchTab(name) {
-  ['log','today','history'].forEach(t => {
-    document.getElementById('tab-'+t).classList.toggle('active', t === name);
-    document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle('active', t === name);
-  });
-  if (name === 'today') loadTodayData();
-  if (name === 'history' && !document.getElementById('histDatePicker').value) {
-    const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
-    document.getElementById('histDatePicker').value = formatDate(yesterday);
-    loadHistoryDate();
-  }
-}
-
-// ─── HISTORY ───────────────────────────────────────────────────
-function changeHistDate(delta) {
-  const picker = document.getElementById('histDatePicker');
-  const current = picker.value ? new Date(picker.value + 'T12:00:00') : new Date();
-  current.setDate(current.getDate() + delta);
-  const today = new Date(); today.setHours(23,59,59,999);
-  if (current > today) return;
-  picker.value = formatDate(current);
-  document.getElementById('histNext').disabled = formatDate(current) >= formatDate(new Date());
-  loadHistoryDate();
-}
-
-async function loadHistoryDate() {
-  const date = document.getElementById('histDatePicker').value;
-  if (!date) return;
-  document.getElementById('histNext').disabled = date >= formatDate(new Date());
+function renderHistory(date, rows) {
   const el = document.getElementById('histContent');
-  if (!googleToken || !gapiReady) {
-    el.innerHTML = '<div class="empty-log">Sign in with Google to view history</div>'; return;
-  }
-  el.innerHTML = '<div class="empty-log"><span class="spinner" style="display:inline-block;margin-right:6px"></span>Loading...</div>';
-  try {
-    const res = await gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: cfg.sheetId,
-      range: 'Meals!A:G'
-    });
-    const rows = (res.result.values || []).slice(1).filter(r => r[0] === date);
-    renderHistoryContent(date, rows);
-  } catch(e) {
-    el.innerHTML = '<div class="empty-log" style="color:var(--danger)">Error loading data</div>';
-  }
-}
-
-function renderHistoryContent(date, rows) {
-  const el = document.getElementById('histContent');
-  const d = new Date(date + 'T12:00:00');
-  const label = d.toLocaleDateString('en-GB', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+  const label = new Date(date+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
   const isToday = date === formatDate(new Date());
-  if (!rows.length) {
-    el.innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted);margin-bottom:14px">${label}${isToday ? ' <span class="hist-badge">today</span>' : ''}</div><div class="empty-log">No entries for this date</div>`;
-    return;
-  }
-  const sum = {cal:0,protein:0,carbs:0,fat:0};
-  rows.forEach(r => { sum.cal+=Number(r[3])||0; sum.protein+=Number(r[4])||0; sum.carbs+=Number(r[5])||0; sum.fat+=Number(r[6])||0; });
-  const pctCal = Math.round(sum.cal/GOALS.cal*100);
-  el.innerHTML = `
-    <div style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted);margin-bottom:14px">${label}${isToday ? ' <span class="hist-badge">today</span>' : ''}</div>
+  const badge = isToday ? ' <span class="hist-badge">today</span>' : '';
+  const dateLabel = `<div style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted);margin-bottom:12px">${label}${badge}</div>`;
+
+  if (!rows.length) { el.innerHTML = dateLabel + '<div class="empty-log">No entries</div>'; return; }
+
+  const s = sum(rows);
+  const pct = Math.round(s.cal/GOALS.cal*100);
+  el.innerHTML = dateLabel + `
     <div class="hist-summary">
-      <div class="hist-macro"><div class="hist-macro-label">Calories</div><div class="hist-macro-val" style="color:var(--accent)">${Math.round(sum.cal)} <span style="font-size:0.7rem;color:var(--muted);font-weight:400">/ ${GOALS.cal} (${pctCal}%)</span></div></div>
-      <div class="hist-macro"><div class="hist-macro-label">Protein</div><div class="hist-macro-val" style="color:var(--protein)">${Math.round(sum.protein)}g <span style="font-size:0.7rem;color:var(--muted);font-weight:400">/ ${GOALS.protein}g</span></div></div>
-      <div class="hist-macro"><div class="hist-macro-label">Carbs</div><div class="hist-macro-val" style="color:var(--carbs)">${Math.round(sum.carbs)}g <span style="font-size:0.7rem;color:var(--muted);font-weight:400">/ ${GOALS.carbs}g</span></div></div>
-      <div class="hist-macro"><div class="hist-macro-label">Fat</div><div class="hist-macro-val" style="color:var(--fat)">${Math.round(sum.fat)}g <span style="font-size:0.7rem;color:var(--muted);font-weight:400">/ ${GOALS.fat}g</span></div></div>
+      <div class="hist-macro"><div class="hist-macro-label">Calories</div><div class="hist-macro-val" style="color:var(--accent)">${Math.round(s.cal)} <span style="font-size:0.68rem;color:var(--muted);font-weight:400">/ ${GOALS.cal} (${pct}%)</span></div></div>
+      <div class="hist-macro"><div class="hist-macro-label">Protein</div><div class="hist-macro-val" style="color:var(--protein)">${Math.round(s.protein)}g <span style="font-size:0.68rem;color:var(--muted);font-weight:400">/ ${GOALS.protein}g</span></div></div>
+      <div class="hist-macro"><div class="hist-macro-label">Carbs</div><div class="hist-macro-val" style="color:var(--carbs)">${Math.round(s.carbs)}g <span style="font-size:0.68rem;color:var(--muted);font-weight:400">/ ${GOALS.carbs}g</span></div></div>
+      <div class="hist-macro"><div class="hist-macro-label">Fat</div><div class="hist-macro-val" style="color:var(--fat)">${Math.round(s.fat)}g <span style="font-size:0.68rem;color:var(--muted);font-weight:400">/ ${GOALS.fat}g</span></div></div>
     </div>
     <div class="divider"></div>
     <div class="card-title">${rows.length} entr${rows.length===1?'y':'ies'}</div>
-    <div class="today-log">
-      ${rows.map(r=>`
-        <div class="log-entry">
-          <div><div class="log-entry-name">${r[2]||'Meal'}</div><div class="log-entry-time">${r[1]||''}</div></div>
-          <div style="text-align:right">
-            <div class="log-entry-cal">${r[3]||0} kcal</div>
-            <div style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted)">${r[4]||0}p · ${r[5]||0}c · ${r[6]||0}f</div>
-          </div>
-        </div>`).join('')}
-    </div>`;
+    ${rows.map(entryHTML).join('')}`;
 }
 
-// ─── UTILS ────────────────────────────────────────────────────
+function entryHTML(r) {
+  return `<div class="log-entry">
+    <div>
+      <div class="log-entry-name">${r[2]||'—'}</div>
+      <div class="log-entry-type">${r[1]||''}</div>
+      <div class="log-entry-macros">${r[4]||0}g P &middot; ${r[5]||0}g C &middot; ${r[6]||0}g F</div>
+    </div>
+    <div class="log-entry-cal">${r[3]||0} kcal</div>
+  </div>`;
+}
+
+function changeHistDate(delta) {
+  const picker = document.getElementById('histDatePicker');
+  const d = picker.value ? new Date(picker.value+'T12:00:00') : new Date();
+  d.setDate(d.getDate()+delta);
+  if (d > new Date()) return;
+  picker.value = formatDate(d);
+  document.getElementById('histNext').disabled = formatDate(d) >= formatDate(new Date());
+  loadDate(picker.value, 'history');
+}
+
+function sum(rows) {
+  const s = {cal:0,protein:0,carbs:0,fat:0};
+  rows.forEach(r => { s.cal+=Number(r[3])||0; s.protein+=Number(r[4])||0; s.carbs+=Number(r[5])||0; s.fat+=Number(r[6])||0; });
+  return s;
+}
+
+function setBar(barId, textId, val, goal, unit, isCal) {
+  document.getElementById(barId).style.width = Math.min(Math.round(val/goal*100),100)+'%';
+  const t = document.getElementById(textId);
+  t.textContent = isCal ? `${Math.round(val)} / ${goal}` : `${Math.round(val)} / ${goal}${unit}`;
+  t.classList.toggle('over', val > goal);
+}
+
 function formatDate(d) {
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 
 function setStatus(id, type, msg) {
   const el = document.getElementById(id);
-  el.className = 'status show ' + type;
-  el.innerHTML = type === 'loading' ? `<span class="spinner"></span>${msg}` : msg;
+  el.className = 'status show '+type;
+  el.innerHTML = type==='loading' ? `<span class="spinner"></span>${msg}` : msg;
+}
+
+function switchTab(name) {
+  ['log','today','history','settings'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('active', t===name);
+    document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle('active', t===name);
+  });
+  if (name==='today')   loadDate(formatDate(new Date()), 'today');
+  if (name==='history') loadDate(document.getElementById('histDatePicker').value||formatDate(new Date()), 'history');
 }
 
 window.addEventListener('load', init);
