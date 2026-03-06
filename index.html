@@ -267,6 +267,19 @@
   .hist-macro-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-bottom: 2px; }
   .hist-macro-val { font-size: 1.1rem; font-weight: 800; }
 
+  .ai-reasoning {
+    background: #0e0f11;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+
   @media (max-width: 380px) {
     .macro-grid { grid-template-columns: 1fr 1fr; }
   }
@@ -395,6 +408,10 @@
   <div class="inline-row">
     <button class="btn btn-primary" onclick="logToSheet()">✓ Log to Sheet</button>
     <button class="btn btn-ghost" onclick="discardResult()">Discard</button>
+  </div>
+  <div style="display:none;margin-top:14px">
+    <div class="card-title" style="margin-bottom:8px">🧠 AI Breakdown</div>
+    <div id="aiReasoning" class="ai-reasoning"></div>
   </div>
   <div class="status" id="logStatus"></div>
 </div>
@@ -590,10 +607,10 @@ async function analyze() {
   document.getElementById('analyzeBtn').disabled = true;
   document.getElementById('resultPanel').classList.remove('show');
 
-  const prompt = `Analyze this food and return ONLY a JSON object (no markdown, no explanation) with these exact fields:
-{"meal_name":"short descriptive name","calories":number,"protein_g":number,"carbs_g":number,"fat_g":number}
+  const prompt = `Analyze this food and return ONLY a JSON object (no markdown, no explanation outside the JSON) with these exact fields:
+{"meal_name":"short descriptive name","calories":number,"protein_g":number,"carbs_g":number,"fat_g":number,"reasoning":"step by step breakdown, e.g. Chicken breast 250g: 100g has 31g protein, 0g fat, 165 kcal → 250g = 77g protein, 0g fat, 412 kcal. Rice 150g cooked: 100g has 28g carbs, 130 kcal → 150g = 42g carbs, 195 kcal. Total: ..."}
 ${desc ? 'User description: ' + desc : ''}
-Be accurate. If unsure, give a realistic middle estimate. Return only the JSON, nothing else.`;
+In the reasoning field, show your working for each ingredient separately with per-100g values, then scale to actual amount, then sum up totals. Be precise and transparent. Return only the JSON, nothing else.`;
 
   const contentParts = [];
   if (photoBase64) {
@@ -635,6 +652,15 @@ function showResult(data) {
   document.getElementById('editProtein').value = data.protein_g || 0;
   document.getElementById('editCarbs').value = data.carbs_g || 0;
   document.getElementById('editFat').value = data.fat_g || 0;
+
+  const reasoningEl = document.getElementById('aiReasoning');
+  if (data.reasoning) {
+    reasoningEl.textContent = data.reasoning;
+    reasoningEl.parentElement.style.display = 'block';
+  } else {
+    reasoningEl.parentElement.style.display = 'none';
+  }
+
   document.getElementById('resultPanel').classList.add('show');
 }
 
