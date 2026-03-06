@@ -256,7 +256,41 @@ function initGoogle() {
     await gapi.client.init({});
     await gapi.client.load('https://sheets.googleapis.com/$discovery/rest?version=v4');
     gapiReady = true;
+    tryRestoreToken();
   });
+}
+
+function tryRestoreToken() {
+  const saved = localStorage.getItem('fuellog_token');
+  const expiry = Number(localStorage.getItem('fuellog_token_expiry') || 0);
+  if (saved && Date.now() < expiry) {
+    // Token still valid — restore silently
+    googleToken = saved;
+    gapi.client.setToken({ access_token: saved });
+    setAuthStatus('✓ Signed in', true);
+    loadDate(formatDate(new Date()), 'today');
+  } else {
+    // Token missing or expired — try silent refresh (no popup)
+    trySilentAuth();
+  }
+}
+
+function trySilentAuth() {
+  if (!cfg.clientId) return;
+  try {
+    const client = google.accounts.oauth2.initTokenClient({
+      client_id: cfg.clientId,
+      scope: 'https://www.googleapis.com/auth/spreadsheets',
+      prompt: '',  // silent — only works if user already granted access
+      callback: (resp) => {
+        if (resp.error || !resp.access_token) return; // silent fail, user clicks manually
+        saveToken(resp.access_token, resp.expires_in);
+        setAuthStatus('✓ Signed in', true);
+        loadDate(formatDate(new Date()), 'today');
+      }
+    });
+    client.requestAccessToken();
+  } catch(e) { /* silent fail */ }
 }
 
 function handleAuth() {
@@ -266,13 +300,21 @@ function handleAuth() {
     scope: 'https://www.googleapis.com/auth/spreadsheets',
     callback: (resp) => {
       if (resp.error) { setAuthStatus('Error: '+resp.error, false); return; }
-      googleToken = resp.access_token;
-      gapi.client.setToken({ access_token: googleToken });
+      saveToken(resp.access_token, resp.expires_in);
       setAuthStatus('✓ Signed in', true);
       loadDate(formatDate(new Date()), 'today');
     }
   });
   tokenClient.requestAccessToken();
+}
+
+function saveToken(token, expiresIn) {
+  googleToken = token;
+  gapi.client.setToken({ access_token: token });
+  // Save with 5min buffer before actual expiry
+  const expiry = Date.now() + ((expiresIn || 3600) - 300) * 1000;
+  localStorage.setItem('fuellog_token', token);
+  localStorage.setItem('fuellog_token_expiry', String(expiry));
 }
 
 function setAuthStatus(msg, ok) {
