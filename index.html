@@ -607,10 +607,21 @@ async function analyze() {
   document.getElementById('analyzeBtn').disabled = true;
   document.getElementById('resultPanel').classList.remove('show');
 
-  const prompt = `Analyze this food and return ONLY a JSON object (no markdown, no explanation outside the JSON) with these exact fields:
-{"meal_name":"short descriptive name","calories":number,"protein_g":number,"carbs_g":number,"fat_g":number,"reasoning":"step by step breakdown, e.g. Chicken breast 250g: 100g has 31g protein, 0g fat, 165 kcal → 250g = 77g protein, 0g fat, 412 kcal. Rice 150g cooked: 100g has 28g carbs, 130 kcal → 150g = 42g carbs, 195 kcal. Total: ..."}
-${desc ? 'User description: ' + desc : ''}
-In the reasoning field, show your working for each ingredient separately with per-100g values, then scale to actual amount, then sum up totals. Be precise and transparent. Return only the JSON, nothing else.`;
+  const prompt = `You are a precise nutrition calculator. Analyze the food and return ONLY a valid JSON object.
+
+Rules:
+- Track ALL 4 macros (protein, carbs, fat, calories) for EVERY ingredient — never skip a macro even if it seems small
+- Buckwheat, rice, oats etc. DO have protein and fat — include them
+- Chicken, meat etc. DO have small amounts of carbs sometimes — check carefully
+- The final JSON numbers MUST exactly match the totals in your reasoning — double check before returning
+- Use standard nutritional databases (per 100g cooked unless stated otherwise)
+
+Return this exact JSON (no markdown, no text outside it):
+{"meal_name":"short name","calories":number,"protein_g":number,"carbs_g":number,"fat_g":number,"reasoning":"For each ingredient show: NAME Xg → per 100g: Pc protein / Cc carbs / Ff fat / Kkcal → scaled: Ps protein / Cs carbs / Fs fat / Ks kcal. Then: TOTAL = sum each macro explicitly."}
+
+${desc ? 'Food: ' + desc : 'Analyze the food in the image.'}
+
+After writing the reasoning, verify: calories/protein_g/carbs_g/fat_g in the JSON exactly equal the TOTAL line in reasoning.`;
 
   const contentParts = [];
   if (photoBase64) {
