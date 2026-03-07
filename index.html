@@ -101,6 +101,17 @@
   .hist-macro-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-bottom: 2px; }
   .hist-macro-val { font-size: 1.1rem; font-weight: 800; }
   .hist-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.72rem; background: var(--accent-dim); color: var(--accent); border-radius: 4px; padding: 2px 7px; margin-left: 6px; }
+
+  /* Saved meals */
+  .search-input { width: 100%; background: #0e0f11; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 9px 12px; outline: none; transition: border-color 0.2s; margin-bottom: 10px; }
+  .search-input:focus { border-color: var(--accent); }
+  .saved-list { display: flex; flex-direction: column; gap: 6px; max-height: 320px; overflow-y: auto; }
+  .saved-item { display: flex; justify-content: space-between; align-items: center; background: #0e0f11; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; cursor: pointer; transition: border-color 0.15s; }
+  .saved-item:hover { border-color: var(--accent); }
+  .saved-item-name { font-weight: 700; font-size: 0.88rem; margin-bottom: 2px; }
+  .saved-item-macros { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); }
+  .saved-item-cal { font-family: 'DM Mono', monospace; font-size: 0.88rem; color: var(--accent); font-weight: 700; white-space: nowrap; margin-left: 10px; }
+  .saved-loading { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--muted); text-align: center; padding: 16px; }
 </style>
 </head>
 <body>
@@ -144,13 +155,19 @@
     <button class="btn btn-primary" id="logBtn" onclick="logEntry()">➕ Add to Sheet</button>
     <div class="status" id="logStatus"></div>
   </div>
+
+  <div class="card">
+    <div class="card-title">Quick Add — Saved Meals</div>
+    <input type="text" class="search-input" id="savedSearch" placeholder="Search saved meals..." oninput="filterSaved()">
+    <div class="saved-list" id="savedList"><div class="saved-loading">Sign in to load saved meals</div></div>
+  </div>
 </div>
 
 <!-- ══ TODAY ══ -->
 <div id="tab-today" class="tab-panel">
   <div class="card">
     <div class="cal-big" id="todayCalBig">0</div>
-    <div class="cal-goal" id="todayCalGoal">of 2429 kcal</div>
+    <div class="cal-goal" id="todayCalGoal">of — kcal</div>
     <div class="progress-row">
       <div class="progress-row-header"><span>Calories</span><span id="pCalText"  style="color:var(--accent);font-family:'DM Mono',monospace;font-size:0.78rem">0 / 2429</span></div>
       <div class="progress-bar"><div class="progress-fill fill-cal"     id="pCalBar"  style="width:0%"></div></div>
@@ -216,9 +233,10 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://apis.google.com/js/api.js"></script>
 <script>
-const GOALS = { cal:2429, protein:180, carbs:281, fat:65 };
 const CFG_KEY = 'fuellog_cfg';
 let cfg = {}, googleToken = null, gapiReady = false, tokenClient;
+let GOALS = { cal:2000, protein:150, carbs:250, fat:65 }; // defaults until sheet loads
+let savedMeals = [];
 
 function init() {
   try { cfg = JSON.parse(localStorage.getItem(CFG_KEY)||'{}'); } catch(e) { cfg={}; }
@@ -264,13 +282,11 @@ function tryRestoreToken() {
   const saved = localStorage.getItem('fuellog_token');
   const expiry = Number(localStorage.getItem('fuellog_token_expiry') || 0);
   if (saved && Date.now() < expiry) {
-    // Token still valid — restore silently
     googleToken = saved;
     gapi.client.setToken({ access_token: saved });
     setAuthStatus('✓ Signed in', true);
-    loadDate(formatDate(new Date()), 'today');
+    onSignedIn();
   } else {
-    // Token missing or expired — try silent refresh (no popup)
     trySilentAuth();
   }
 }
@@ -281,12 +297,12 @@ function trySilentAuth() {
     const client = google.accounts.oauth2.initTokenClient({
       client_id: cfg.clientId,
       scope: 'https://www.googleapis.com/auth/spreadsheets',
-      prompt: '',  // silent — only works if user already granted access
+      prompt: '',
       callback: (resp) => {
-        if (resp.error || !resp.access_token) return; // silent fail, user clicks manually
+        if (resp.error || !resp.access_token) return;
         saveToken(resp.access_token, resp.expires_in);
         setAuthStatus('✓ Signed in', true);
-        loadDate(formatDate(new Date()), 'today');
+        onSignedIn();
       }
     });
     client.requestAccessToken();
@@ -302,10 +318,77 @@ function handleAuth() {
       if (resp.error) { setAuthStatus('Error: '+resp.error, false); return; }
       saveToken(resp.access_token, resp.expires_in);
       setAuthStatus('✓ Signed in', true);
-      loadDate(formatDate(new Date()), 'today');
+      onSignedIn();
     }
   });
   tokenClient.requestAccessToken();
+}
+
+function onSignedIn() {
+  loadGoals();
+  loadSavedMeals();
+  loadDate(formatDate(new Date()), 'today');
+}
+
+async function loadGoals() {
+  try {
+    const res = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: cfg.sheetId, range: 'Goal!A1:D2' });
+    const rows = res.result.values || [];
+    // Row 0 = headers, Row 1 = values; or just one row of values if no header
+    const vals = rows.length >= 2 ? rows[1] : rows[0];
+    if (vals) {
+      GOALS.cal     = Number(vals[0]) || GOALS.cal;
+      GOALS.protein = Number(vals[1]) || GOALS.protein;
+      GOALS.carbs   = Number(vals[2]) || GOALS.carbs;
+      GOALS.fat     = Number(vals[3]) || GOALS.fat;
+    }
+    // Update static goal labels
+    document.getElementById('todayCalGoal').textContent = `of ${GOALS.cal} kcal`;
+  } catch(e) { console.warn('Could not load goals', e); }
+}
+
+async function loadSavedMeals() {
+  const el = document.getElementById('savedList');
+  el.innerHTML = '<div class="saved-loading"><span class="spinner"></span> Loading...</div>';
+  try {
+    const res = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: cfg.sheetId, range: 'SavedMeals!A:E' });
+    const rows = (res.result.values || []).slice(1); // skip header
+    savedMeals = rows.map(r => ({
+      name: r[0] || '', cal: Number(r[1])||0, protein: Number(r[2])||0, carbs: Number(r[3])||0, fat: Number(r[4])||0
+    })).filter(m => m.name);
+    filterSaved();
+  } catch(e) {
+    el.innerHTML = '<div class="saved-loading">Could not load SavedMeals sheet</div>';
+  }
+}
+
+function filterSaved() {
+  const q = (document.getElementById('savedSearch').value || '').toLowerCase();
+  const filtered = q ? savedMeals.filter(m => m.name.toLowerCase().includes(q)) : savedMeals;
+  const el = document.getElementById('savedList');
+  if (!filtered.length) {
+    el.innerHTML = '<div class="saved-loading">No meals found</div>'; return;
+  }
+  el.innerHTML = filtered.map((m, i) => `
+    <div class="saved-item" onclick="applySaved(${savedMeals.indexOf(m)})">
+      <div>
+        <div class="saved-item-name">${m.name}</div>
+        <div class="saved-item-macros">${m.protein}g P &middot; ${m.carbs}g C &middot; ${m.fat}g F</div>
+      </div>
+      <div class="saved-item-cal">${m.cal} kcal</div>
+    </div>`).join('');
+}
+
+function applySaved(idx) {
+  const m = savedMeals[idx];
+  if (!m) return;
+  document.getElementById('mealDesc').value  = m.name;
+  document.getElementById('inCal').value     = m.cal;
+  document.getElementById('inProt').value    = m.protein;
+  document.getElementById('inCarbs').value   = m.carbs;
+  document.getElementById('inFat').value     = m.fat;
+  // Scroll to top of form
+  document.getElementById('tab-log').scrollIntoView({ behavior: 'smooth' });
 }
 
 function saveToken(token, expiresIn) {
