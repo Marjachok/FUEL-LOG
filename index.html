@@ -18,6 +18,7 @@
   .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
   .header-date { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--muted); }
 
+  /* Tabs */
   .tabs { display: flex; gap: 4px; margin-bottom: 16px; background: var(--surface); border-radius: 10px; padding: 4px; border: 1px solid var(--border); }
   .tab-btn { flex: 1; padding: 10px; border: none; border-radius: 7px; font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.15s; background: transparent; color: var(--muted); }
   .tab-btn.active { background: var(--accent); color: #0e0f11; }
@@ -25,15 +26,14 @@
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
+  /* Cards */
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
   .card-title { font-size: 0.72rem; font-family: 'DM Mono', monospace; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
 
+  /* Form fields */
   label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; font-family: 'DM Mono', monospace; }
-  input, select {
-    width: 100%; background: #0e0f11; border: 1px solid var(--border);
-    border-radius: 8px; color: var(--text); font-family: 'DM Mono', monospace;
-    font-size: 0.9rem; padding: 10px 12px; outline: none; transition: border-color 0.2s;
-  }
+  input, select { width: 100%; background: #0e0f11; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.9rem; padding: 10px 12px; outline: none; transition: border-color 0.2s; }
   input:focus, select:focus { border-color: var(--accent); }
   select { cursor: pointer; } option { background: #16181c; }
   .field { margin-bottom: 12px; }
@@ -46,6 +46,7 @@
   .macro-input.carb input { color: var(--carbs); }
   .macro-input.fat  input { color: var(--fat); }
 
+  /* Buttons */
   .btn { width: 100%; padding: 14px; border: none; border-radius: 10px; font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.15s; letter-spacing: 0.02em; }
   .btn-primary { background: var(--accent); color: #0e0f11; }
   .btn-primary:hover { background: #d4f54a; transform: translateY(-1px); }
@@ -53,7 +54,10 @@
   .btn-primary:disabled { background: #3a3d42; color: var(--muted); cursor: not-allowed; transform: none; }
   .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
   .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+  .btn-danger { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
+  .btn-danger:hover { background: rgba(248,113,113,0.1); }
 
+  /* Status */
   .status { font-family: 'DM Mono', monospace; font-size: 0.82rem; padding: 10px 14px; border-radius: 8px; margin-top: 10px; display: none; }
   .status.show { display: block; }
   .status.loading { background: var(--accent-dim); color: var(--accent); }
@@ -62,56 +66,55 @@
   .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 6px; vertical-align: middle; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .cal-big { font-size: 2.4rem; font-weight: 800; color: var(--accent); line-height: 1; }
-  .cal-goal { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--muted); margin-top: 4px; margin-bottom: 18px; }
+  /* Progress bars */
+  .cal-big { font-size: 2.6rem; font-weight: 800; color: var(--accent); line-height: 1; }
+  .cal-goal { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--muted); margin-top: 4px; margin-bottom: 20px; }
   .progress-row { margin-bottom: 14px; }
   .progress-row-header { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.78rem; margin-bottom: 6px; }
   .progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
-  .progress-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+  .progress-fill { height: 100%; border-radius: 4px; transition: width 0.7s ease; }
   .fill-cal { background: var(--accent); } .fill-protein { background: var(--protein); }
   .fill-carbs { background: var(--carbs); } .fill-fat { background: var(--fat); }
   .over { color: var(--danger) !important; }
-  .divider { height: 1px; background: var(--border); margin: 16px 0; }
 
+  /* Log entries */
   .log-entry { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
   .log-entry:last-child { border-bottom: none; }
   .log-entry-name { font-weight: 700; font-size: 0.9rem; }
   .log-entry-type { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); }
   .log-entry-macros { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
-  .log-entry-cal { font-family: 'DM Mono', monospace; color: var(--accent); font-weight: 700; text-align: right; }
+  .log-entry-cal { font-family: 'DM Mono', monospace; color: var(--accent); font-weight: 700; text-align: right; white-space: nowrap; }
   .empty-log { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.82rem; text-align: center; padding: 24px; }
 
+  /* Date nav */
   .date-nav { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
   .date-nav-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: border-color 0.2s; flex-shrink: 0; }
   .date-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .date-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
   input[type="date"] { flex: 1; }
 
+  /* Auth */
   .auth-btn { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.82rem; cursor: pointer; transition: border-color 0.2s; width: 100%; }
   .auth-btn:hover { border-color: var(--accent); }
   .auth-status { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-top: 6px; }
   .auth-status.ok { color: #4ade80; }
-
   .setup-note { color: var(--muted); font-size: 0.8rem; line-height: 1.7; margin-bottom: 12px; }
   .setup-note code { background: #1e2026; color: var(--accent); padding: 2px 6px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 0.78rem; }
   .config-grid { display: grid; gap: 10px; }
 
-  .hist-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-  .hist-macro { background: #0e0f11; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
-  .hist-macro-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-bottom: 2px; }
-  .hist-macro-val { font-size: 1.1rem; font-weight: 800; }
-  .hist-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.72rem; background: var(--accent-dim); color: var(--accent); border-radius: 4px; padding: 2px 7px; margin-left: 6px; }
-
   /* Saved meals */
-  .search-input { width: 100%; background: #0e0f11; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 9px 12px; outline: none; transition: border-color 0.2s; margin-bottom: 10px; }
-  .search-input:focus { border-color: var(--accent); }
-  .saved-list { display: flex; flex-direction: column; gap: 6px; max-height: 320px; overflow-y: auto; }
-  .saved-item { display: flex; justify-content: space-between; align-items: center; background: #0e0f11; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; cursor: pointer; transition: border-color 0.15s; }
-  .saved-item:hover { border-color: var(--accent); }
-  .saved-item-name { font-weight: 700; font-size: 0.88rem; margin-bottom: 2px; }
+  .saved-list { display: flex; flex-direction: column; gap: 6px; max-height: 340px; overflow-y: auto; }
+  .saved-item { display: flex; justify-content: space-between; align-items: center; background: #0e0f11; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; transition: border-color 0.15s; }
+  .saved-item:hover { border-color: #3a3d42; }
+  .saved-item-left { flex: 1; cursor: pointer; min-width: 0; }
+  .saved-item-left:hover .saved-item-name { color: var(--accent); }
+  .saved-item-name { font-weight: 700; font-size: 0.88rem; margin-bottom: 2px; transition: color 0.15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .saved-item-macros { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); }
-  .saved-item-cal { font-family: 'DM Mono', monospace; font-size: 0.88rem; color: var(--accent); font-weight: 700; white-space: nowrap; margin-left: 10px; }
+  .saved-item-right { display: flex; align-items: center; gap: 8px; margin-left: 10px; flex-shrink: 0; }
+  .saved-item-cal { font-family: 'DM Mono', monospace; font-size: 0.88rem; color: var(--accent); font-weight: 700; }
+  .saved-delete-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 2px 4px; transition: color 0.15s; line-height: 1; }
+  .saved-delete-btn:hover { color: var(--danger); }
   .saved-loading { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--muted); text-align: center; padding: 16px; }
+  .hist-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.72rem; background: var(--accent-dim); color: var(--accent); border-radius: 4px; padding: 2px 7px; margin-left: 6px; }
 </style>
 </head>
 <body>
@@ -123,8 +126,8 @@
 
 <div class="tabs">
   <button class="tab-btn active" id="tabLog"      onclick="switchTab('log')">Log</button>
-  <button class="tab-btn"        id="tabToday"    onclick="switchTab('today')">Today</button>
   <button class="tab-btn"        id="tabHistory"  onclick="switchTab('history')">History</button>
+  <button class="tab-btn"        id="tabMeals"    onclick="switchTab('meals')">Saved</button>
   <button class="tab-btn"        id="tabSettings" onclick="switchTab('settings')">⚙</button>
 </div>
 
@@ -156,38 +159,11 @@
     <div class="status" id="logStatus"></div>
   </div>
 
+  <!-- Quick add from saved -->
   <div class="card">
     <div class="card-title">Quick Add — Saved Meals</div>
-    <input type="text" class="search-input" id="savedSearch" placeholder="Search saved meals..." oninput="filterSaved()">
-    <div class="saved-list" id="savedList"><div class="saved-loading">Sign in to load saved meals</div></div>
-  </div>
-</div>
-
-<!-- ══ TODAY ══ -->
-<div id="tab-today" class="tab-panel">
-  <div class="card">
-    <div class="cal-big" id="todayCalBig">0</div>
-    <div class="cal-goal" id="todayCalGoal">of — kcal</div>
-    <div class="progress-row">
-      <div class="progress-row-header"><span>Calories</span><span id="pCalText"  style="color:var(--accent);font-family:'DM Mono',monospace;font-size:0.78rem">0 / 2429</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-cal"     id="pCalBar"  style="width:0%"></div></div>
-    </div>
-    <div class="progress-row">
-      <div class="progress-row-header"><span>Protein</span><span id="pProtText" style="color:var(--protein);font-family:'DM Mono',monospace;font-size:0.78rem">0 / 180g</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-protein" id="pProtBar" style="width:0%"></div></div>
-    </div>
-    <div class="progress-row">
-      <div class="progress-row-header"><span>Carbs</span><span id="pCarbText"  style="color:var(--carbs);font-family:'DM Mono',monospace;font-size:0.78rem">0 / 281g</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-carbs"   id="pCarbBar" style="width:0%"></div></div>
-    </div>
-    <div class="progress-row">
-      <div class="progress-row-header"><span>Fat</span><span id="pFatText"     style="color:var(--fat);font-family:'DM Mono',monospace;font-size:0.78rem">0 / 65g</span></div>
-      <div class="progress-bar"><div class="progress-fill fill-fat"     id="pFatBar"  style="width:0%"></div></div>
-    </div>
-    <div class="divider"></div>
-    <div class="card-title">Entries</div>
-    <div id="todayLog"><div class="empty-log">No entries yet</div></div>
-    <button class="btn btn-ghost" style="margin-top:12px;font-size:0.8rem" onclick="loadDate(formatDate(new Date()),'today')">↻ Refresh</button>
+    <input type="text" id="savedSearch" style="width:100%;background:#0e0f11;border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:0.85rem;padding:9px 12px;outline:none;margin-bottom:10px;transition:border-color 0.2s" placeholder="Search..." oninput="filterSaved('log')" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+    <div class="saved-list" id="savedListLog"><div class="saved-loading">Sign in to load saved meals</div></div>
   </div>
 </div>
 
@@ -196,10 +172,37 @@
   <div class="card">
     <div class="date-nav">
       <button class="date-nav-btn" onclick="changeHistDate(-1)">‹</button>
-      <input type="date" id="histDatePicker" onchange="loadDate(this.value,'history')">
+      <input type="date" id="histDatePicker" onchange="loadHistory()">
       <button class="date-nav-btn" id="histNext" onclick="changeHistDate(1)">›</button>
     </div>
     <div id="histContent"><div class="empty-log">Pick a date to view</div></div>
+  </div>
+</div>
+
+<!-- ══ SAVED MEALS ══ -->
+<div id="tab-meals" class="tab-panel">
+  <!-- Add new saved meal -->
+  <div class="card">
+    <div class="card-title">Add Saved Meal</div>
+    <div class="field">
+      <label>Name / Description</label>
+      <input type="text" id="smName" placeholder="e.g. Oats with banana">
+    </div>
+    <div class="row4">
+      <div class="macro-input cal"> <label>Kcal</label>   <input type="number" id="smCal"   min="0" placeholder="0"></div>
+      <div class="macro-input prot"><label>Protein</label><input type="number" id="smProt"  min="0" placeholder="0"></div>
+      <div class="macro-input carb"><label>Carbs</label>  <input type="number" id="smCarbs" min="0" placeholder="0"></div>
+      <div class="macro-input fat"> <label>Fat</label>    <input type="number" id="smFat"   min="0" placeholder="0"></div>
+    </div>
+    <button class="btn btn-primary" id="smAddBtn" onclick="addSavedMeal()">Save Meal</button>
+    <div class="status" id="smStatus"></div>
+  </div>
+
+  <!-- Saved meals list -->
+  <div class="card">
+    <div class="card-title">All Saved Meals</div>
+    <input type="text" id="savedSearchMeals" style="width:100%;background:#0e0f11;border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:0.85rem;padding:9px 12px;outline:none;margin-bottom:10px;transition:border-color 0.2s" placeholder="Search..." oninput="filterSaved('meals')" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+    <div class="saved-list" id="savedListMeals"><div class="saved-loading">Sign in to load</div></div>
   </div>
 </div>
 
@@ -208,7 +211,7 @@
   <div class="card">
     <div class="card-title">Google Sheets Setup</div>
     <p class="setup-note">
-      <strong>Client ID</strong> → <code>console.cloud.google.com</code> → APIs &amp; Services → Credentials → OAuth 2.0 Client ID (Web application). Add your GitHub Pages URL to Authorised JavaScript Origins. Enable <strong>Google Sheets API</strong> in the same project.<br><br>
+      <strong>Client ID</strong> → <code>console.cloud.google.com</code> → APIs &amp; Services → Credentials → OAuth 2.0 Client ID (Web). Add your GitHub Pages URL to Authorised JavaScript Origins. Enable <strong>Google Sheets API</strong>.<br><br>
       <strong>Spreadsheet ID</strong> → the long string in your Sheet URL:<br>
       <code>spreadsheets/d/<u>THIS_PART</u>/edit</code>
     </p>
@@ -235,22 +238,22 @@
 <script>
 const CFG_KEY = 'fuellog_cfg';
 let cfg = {}, googleToken = null, gapiReady = false, tokenClient;
-let GOALS = { cal:2000, protein:150, carbs:250, fat:65 }; // defaults until sheet loads
+let GOALS = { cal:2000, protein:150, carbs:250, fat:65 };
 let savedMeals = [];
+// Row index map: savedMeals[i] maps to sheet row (index+2, 1-based with header)
+let savedMealSheetRows = [];
 
+// ── INIT ──────────────────────────────────────────────────────
 function init() {
   try { cfg = JSON.parse(localStorage.getItem(CFG_KEY)||'{}'); } catch(e) { cfg={}; }
-
   const today = new Date();
   document.getElementById('headerDate').textContent = today.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
   document.getElementById('mealDate').value = formatDate(today);
   document.getElementById('histDatePicker').value = formatDate(today);
-
   const h = today.getHours();
   const sel = document.getElementById('mealType');
   if (h < 10) sel.value='Breakfast'; else if (h < 14) sel.value='Lunch';
   else if (h < 20) sel.value='Dinner'; else sel.value='Snack';
-
   if (cfg.clientId) document.getElementById('cfgClientId').value = cfg.clientId;
   if (cfg.sheetId)  document.getElementById('cfgSheetId').value  = cfg.sheetId;
   if (cfg.clientId && cfg.sheetId) {
@@ -259,6 +262,7 @@ function init() {
   }
 }
 
+// ── CONFIG ────────────────────────────────────────────────────
 function saveConfig() {
   cfg.clientId = document.getElementById('cfgClientId').value.trim();
   cfg.sheetId  = document.getElementById('cfgSheetId').value.trim();
@@ -269,6 +273,7 @@ function saveConfig() {
   initGoogle();
 }
 
+// ── GOOGLE ────────────────────────────────────────────────────
 function initGoogle() {
   gapi.load('client', async () => {
     await gapi.client.init({});
@@ -279,8 +284,8 @@ function initGoogle() {
 }
 
 function tryRestoreToken() {
-  const saved = localStorage.getItem('fuellog_token');
-  const expiry = Number(localStorage.getItem('fuellog_token_expiry') || 0);
+  const saved  = localStorage.getItem('fuellog_token');
+  const expiry = Number(localStorage.getItem('fuellog_token_expiry')||0);
   if (saved && Date.now() < expiry) {
     googleToken = saved;
     gapi.client.setToken({ access_token: saved });
@@ -294,7 +299,7 @@ function tryRestoreToken() {
 function trySilentAuth() {
   if (!cfg.clientId) return;
   try {
-    const client = google.accounts.oauth2.initTokenClient({
+    google.accounts.oauth2.initTokenClient({
       client_id: cfg.clientId,
       scope: 'https://www.googleapis.com/auth/spreadsheets',
       prompt: '',
@@ -304,14 +309,13 @@ function trySilentAuth() {
         setAuthStatus('✓ Signed in', true);
         onSignedIn();
       }
-    });
-    client.requestAccessToken();
-  } catch(e) { /* silent fail */ }
+    }).requestAccessToken();
+  } catch(e) {}
 }
 
 function handleAuth() {
   if (!cfg.clientId) { alert('Save config first.'); return; }
-  tokenClient = google.accounts.oauth2.initTokenClient({
+  google.accounts.oauth2.initTokenClient({
     client_id: cfg.clientId,
     scope: 'https://www.googleapis.com/auth/spreadsheets',
     callback: (resp) => {
@@ -320,21 +324,34 @@ function handleAuth() {
       setAuthStatus('✓ Signed in', true);
       onSignedIn();
     }
-  });
-  tokenClient.requestAccessToken();
+  }).requestAccessToken();
+}
+
+function saveToken(token, expiresIn) {
+  googleToken = token;
+  gapi.client.setToken({ access_token: token });
+  // Store for 12 hours regardless of Google's 1h access token — silent refresh will renew it
+  const expiry = Date.now() + 12 * 60 * 60 * 1000;
+  localStorage.setItem('fuellog_token', token);
+  localStorage.setItem('fuellog_token_expiry', String(expiry));
+}
+
+function setAuthStatus(msg, ok) {
+  const el = document.getElementById('authStatus');
+  el.textContent = msg; el.className = 'auth-status'+(ok?' ok':'');
 }
 
 function onSignedIn() {
   loadGoals();
   loadSavedMeals();
-  loadDate(formatDate(new Date()), 'today');
+  loadHistory();
 }
 
+// ── GOALS ─────────────────────────────────────────────────────
 async function loadGoals() {
   try {
     const res = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: cfg.sheetId, range: 'Goal!A1:D2' });
     const rows = res.result.values || [];
-    // Row 0 = headers, Row 1 = values; or just one row of values if no header
     const vals = rows.length >= 2 ? rows[1] : rows[0];
     if (vals) {
       GOALS.cal     = Number(vals[0]) || GOALS.cal;
@@ -342,40 +359,164 @@ async function loadGoals() {
       GOALS.carbs   = Number(vals[2]) || GOALS.carbs;
       GOALS.fat     = Number(vals[3]) || GOALS.fat;
     }
-    // Update static goal labels
-    document.getElementById('todayCalGoal').textContent = `of ${GOALS.cal} kcal`;
   } catch(e) { console.warn('Could not load goals', e); }
 }
 
-async function loadSavedMeals() {
-  const el = document.getElementById('savedList');
-  el.innerHTML = '<div class="saved-loading"><span class="spinner"></span> Loading...</div>';
+// ── LOG ENTRY ─────────────────────────────────────────────────
+async function logEntry() {
+  if (!googleToken) { alert('Sign in with Google first (⚙ tab).'); return; }
+  if (!gapiReady)   { alert('Google API loading, try again.'); return; }
+  const desc  = document.getElementById('mealDesc').value.trim();
+  const cal   = Number(document.getElementById('inCal').value)   || 0;
+  const prot  = Number(document.getElementById('inProt').value)  || 0;
+  const carbs = Number(document.getElementById('inCarbs').value) || 0;
+  const fat   = Number(document.getElementById('inFat').value)   || 0;
+  if (!desc && !cal) { alert('Add a description or calories.'); return; }
+  setStatus('logStatus','loading','⏳ Saving...');
+  document.getElementById('logBtn').disabled = true;
   try {
-    const res = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: cfg.sheetId, range: 'SavedMeals!A:E' });
-    const rows = (res.result.values || []).slice(1); // skip header
-    savedMeals = rows.map(r => ({
-      name: r[0] || '', cal: Number(r[1])||0, protein: Number(r[2])||0, carbs: Number(r[3])||0, fat: Number(r[4])||0
-    })).filter(m => m.name);
-    filterSaved();
-  } catch(e) {
-    el.innerHTML = '<div class="saved-loading">Could not load SavedMeals sheet</div>';
+    await gapi.client.sheets.spreadsheets.values.append({
+      spreadsheetId: cfg.sheetId, range: 'Meals!A:G', valueInputOption: 'USER_ENTERED',
+      resource: { values: [[ document.getElementById('mealDate').value, document.getElementById('mealType').value, desc, cal, prot, carbs, fat ]] }
+    });
+    setStatus('logStatus','success','✓ Logged!');
+    document.getElementById('mealDesc').value = '';
+    ['inCal','inProt','inCarbs','inFat'].forEach(id => document.getElementById(id).value='');
+  } catch(err) {
+    setStatus('logStatus','error','✗ '+(err.result?.error?.message||err.message));
+  } finally {
+    document.getElementById('logBtn').disabled = false;
   }
 }
 
-function filterSaved() {
-  const q = (document.getElementById('savedSearch').value || '').toLowerCase();
-  const filtered = q ? savedMeals.filter(m => m.name.toLowerCase().includes(q)) : savedMeals;
-  const el = document.getElementById('savedList');
-  if (!filtered.length) {
-    el.innerHTML = '<div class="saved-loading">No meals found</div>'; return;
+// ── HISTORY ───────────────────────────────────────────────────
+async function loadHistory() {
+  const date = document.getElementById('histDatePicker').value;
+  if (!date || !googleToken || !gapiReady) return;
+  document.getElementById('histNext').disabled = date >= formatDate(new Date());
+  const el = document.getElementById('histContent');
+  el.innerHTML = '<div class="empty-log"><span class="spinner"></span> Loading...</div>';
+  try {
+    const res = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: cfg.sheetId, range: 'Meals!A:G' });
+    const rows = (res.result.values||[]).slice(1).filter(r => r[0]===date);
+    renderHistory(date, rows);
+  } catch(e) {
+    el.innerHTML = '<div class="empty-log" style="color:var(--danger)">Error loading data</div>';
   }
-  el.innerHTML = filtered.map((m, i) => `
-    <div class="saved-item" onclick="applySaved(${savedMeals.indexOf(m)})">
-      <div>
-        <div class="saved-item-name">${m.name}</div>
-        <div class="saved-item-macros">${m.protein}g P &middot; ${m.carbs}g C &middot; ${m.fat}g F</div>
+}
+
+function renderHistory(date, rows) {
+  const el = document.getElementById('histContent');
+  const d = new Date(date+'T12:00:00');
+  const label = d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const isToday = date === formatDate(new Date());
+  const badge = isToday ? ' <span class="hist-badge">today</span>' : '';
+
+  if (!rows.length) {
+    el.innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted);margin-bottom:14px">${label}${badge}</div><div class="empty-log">No entries for this date</div>`;
+    return;
+  }
+
+  const s = sum(rows);
+  const pctCal  = Math.min(Math.round(s.cal/GOALS.cal*100),100);
+  const pctProt = Math.min(Math.round(s.protein/GOALS.protein*100),100);
+  const pctCarb = Math.min(Math.round(s.carbs/GOALS.carbs*100),100);
+  const pctFat  = Math.min(Math.round(s.fat/GOALS.fat*100),100);
+  const overCal  = s.cal > GOALS.cal; const overProt = s.protein > GOALS.protein;
+  const overCarb = s.carbs > GOALS.carbs; const overFat = s.fat > GOALS.fat;
+
+  el.innerHTML = `
+    <div style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted);margin-bottom:16px">${label}${badge}</div>
+
+    <div class="cal-big">${Math.round(s.cal)}</div>
+    <div class="cal-goal">of ${GOALS.cal} kcal${overCal ? ' — <span style="color:var(--danger)">over goal</span>' : ''}</div>
+
+    <div class="progress-row">
+      <div class="progress-row-header">
+        <span>Calories</span>
+        <span style="color:${overCal?'var(--danger)':'var(--accent)'};font-family:'DM Mono',monospace;font-size:0.78rem">${Math.round(s.cal)} / ${GOALS.cal}</span>
       </div>
-      <div class="saved-item-cal">${m.cal} kcal</div>
+      <div class="progress-bar"><div class="progress-fill fill-cal" style="width:${pctCal}%"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-row-header">
+        <span>Protein</span>
+        <span style="color:${overProt?'var(--danger)':'var(--protein)'};font-family:'DM Mono',monospace;font-size:0.78rem">${Math.round(s.protein)} / ${GOALS.protein}g</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill fill-protein" style="width:${pctProt}%"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-row-header">
+        <span>Carbs</span>
+        <span style="color:${overCarb?'var(--danger)':'var(--carbs)'};font-family:'DM Mono',monospace;font-size:0.78rem">${Math.round(s.carbs)} / ${GOALS.carbs}g</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill fill-carbs" style="width:${pctCarb}%"></div></div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-row-header">
+        <span>Fat</span>
+        <span style="color:${overFat?'var(--danger)':'var(--fat)'};font-family:'DM Mono',monospace;font-size:0.78rem">${Math.round(s.fat)} / ${GOALS.fat}g</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill fill-fat" style="width:${pctFat}%"></div></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="card-title">${rows.length} entr${rows.length===1?'y':'ies'}</div>
+    ${rows.map(entryHTML).join('')}`;
+}
+
+function changeHistDate(delta) {
+  const picker = document.getElementById('histDatePicker');
+  const d = picker.value ? new Date(picker.value+'T12:00:00') : new Date();
+  d.setDate(d.getDate()+delta);
+  if (d > new Date()) return;
+  picker.value = formatDate(d);
+  loadHistory();
+}
+
+// ── SAVED MEALS ───────────────────────────────────────────────
+async function loadSavedMeals() {
+  ['savedListLog','savedListMeals'].forEach(id => {
+    document.getElementById(id).innerHTML = '<div class="saved-loading"><span class="spinner"></span> Loading...</div>';
+  });
+  try {
+    const res = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: cfg.sheetId, range: 'SavedMeals!A:E' });
+    const rows = res.result.values || [];
+    // Skip header, keep track of original row numbers (1-based, row 1 = header)
+    savedMeals = [];
+    savedMealSheetRows = [];
+    rows.slice(1).forEach((r, i) => {
+      if (r[0]) {
+        savedMeals.push({ name:r[0], cal:Number(r[1])||0, protein:Number(r[2])||0, carbs:Number(r[3])||0, fat:Number(r[4])||0 });
+        savedMealSheetRows.push(i + 2); // +2: 1-based + skip header
+      }
+    });
+    filterSaved('log');
+    filterSaved('meals');
+  } catch(e) {
+    ['savedListLog','savedListMeals'].forEach(id => {
+      document.getElementById(id).innerHTML = '<div class="saved-loading">Could not load SavedMeals sheet</div>';
+    });
+  }
+}
+
+function filterSaved(target) {
+  const searchId = target === 'log' ? 'savedSearch' : 'savedSearchMeals';
+  const listId   = target === 'log' ? 'savedListLog' : 'savedListMeals';
+  const q = (document.getElementById(searchId).value || '').toLowerCase();
+  const filtered = q ? savedMeals.map((m,i)=>({m,i})).filter(({m})=>m.name.toLowerCase().includes(q)) : savedMeals.map((m,i)=>({m,i}));
+  const el = document.getElementById(listId);
+  if (!filtered.length) { el.innerHTML = '<div class="saved-loading">No meals found</div>'; return; }
+  el.innerHTML = filtered.map(({m, i}) => `
+    <div class="saved-item">
+      <div class="saved-item-left" onclick="applySaved(${i})">
+        <div class="saved-item-name">${m.name}</div>
+        <div class="saved-item-macros">${m.protein}g P · ${m.carbs}g C · ${m.fat}g F</div>
+      </div>
+      <div class="saved-item-right">
+        <div class="saved-item-cal">${m.cal} kcal</div>
+        <button class="saved-delete-btn" onclick="deleteSavedMeal(${i}, event)" title="Delete">✕</button>
+      </div>
     </div>`).join('');
 }
 
@@ -387,131 +528,79 @@ function applySaved(idx) {
   document.getElementById('inProt').value    = m.protein;
   document.getElementById('inCarbs').value   = m.carbs;
   document.getElementById('inFat').value     = m.fat;
-  // Scroll to top of form
-  document.getElementById('tab-log').scrollIntoView({ behavior: 'smooth' });
+  switchTab('log');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function saveToken(token, expiresIn) {
-  googleToken = token;
-  gapi.client.setToken({ access_token: token });
-  // Save with 5min buffer before actual expiry
-  const expiry = Date.now() + ((expiresIn || 3600) - 300) * 1000;
-  localStorage.setItem('fuellog_token', token);
-  localStorage.setItem('fuellog_token_expiry', String(expiry));
-}
-
-function setAuthStatus(msg, ok) {
-  const el = document.getElementById('authStatus');
-  el.textContent = msg; el.className = 'auth-status'+(ok?' ok':'');
-}
-
-async function logEntry() {
-  if (!googleToken) { alert('Sign in with Google first (⚙ Settings tab).'); return; }
-  if (!gapiReady)   { alert('Google API loading, try again in a moment.'); return; }
-
-  const desc  = document.getElementById('mealDesc').value.trim();
-  const cal   = Number(document.getElementById('inCal').value)   || 0;
-  const prot  = Number(document.getElementById('inProt').value)  || 0;
-  const carbs = Number(document.getElementById('inCarbs').value) || 0;
-  const fat   = Number(document.getElementById('inFat').value)   || 0;
-
-  if (!desc && !cal) { alert('Add a description or calories.'); return; }
-
-  setStatus('logStatus','loading','⏳ Saving...');
-  document.getElementById('logBtn').disabled = true;
-
+async function addSavedMeal() {
+  if (!googleToken) { alert('Sign in with Google first.'); return; }
+  const name  = document.getElementById('smName').value.trim();
+  const cal   = Number(document.getElementById('smCal').value)   || 0;
+  const prot  = Number(document.getElementById('smProt').value)  || 0;
+  const carbs = Number(document.getElementById('smCarbs').value) || 0;
+  const fat   = Number(document.getElementById('smFat').value)   || 0;
+  if (!name) { alert('Add a name for the meal.'); return; }
+  setStatus('smStatus','loading','⏳ Saving...');
+  document.getElementById('smAddBtn').disabled = true;
   try {
     await gapi.client.sheets.spreadsheets.values.append({
-      spreadsheetId: cfg.sheetId,
-      range: 'Meals!A:G',
-      valueInputOption: 'USER_ENTERED',
-      resource: { values: [[ document.getElementById('mealDate').value, document.getElementById('mealType').value, desc, cal, prot, carbs, fat ]] }
+      spreadsheetId: cfg.sheetId, range: 'SavedMeals!A:E', valueInputOption: 'USER_ENTERED',
+      resource: { values: [[name, cal, prot, carbs, fat]] }
     });
-    setStatus('logStatus','success','✓ Logged!');
-    document.getElementById('mealDesc').value = '';
-    ['inCal','inProt','inCarbs','inFat'].forEach(id => document.getElementById(id).value = '');
+    setStatus('smStatus','success','✓ Saved!');
+    document.getElementById('smName').value = '';
+    ['smCal','smProt','smCarbs','smFat'].forEach(id => document.getElementById(id).value='');
+    await loadSavedMeals();
   } catch(err) {
-    setStatus('logStatus','error','✗ '+(err.result?.error?.message || err.message));
+    setStatus('smStatus','error','✗ '+(err.result?.error?.message||err.message));
   } finally {
-    document.getElementById('logBtn').disabled = false;
+    document.getElementById('smAddBtn').disabled = false;
   }
 }
 
-async function loadDate(date, target) {
-  if (!googleToken || !gapiReady) return;
+async function deleteSavedMeal(idx, event) {
+  event.stopPropagation();
+  const m = savedMeals[idx];
+  if (!m || !confirm(`Delete "${m.name}"?`)) return;
+  const sheetRow = savedMealSheetRows[idx];
   try {
-    const res = await gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: cfg.sheetId, range: 'Meals!A:G' });
-    const rows = (res.result.values||[]).slice(1).filter(r => r[0]===date);
-    if (target==='today') renderToday(rows);
-    else renderHistory(date, rows);
-  } catch(e) { console.warn('Load failed',e); }
+    // Get spreadsheet metadata to find SavedMeals sheet ID
+    const meta = await gapi.client.sheets.spreadsheets.get({ spreadsheetId: cfg.sheetId });
+    const sheet = meta.result.sheets.find(s => s.properties.title === 'SavedMeals');
+    if (!sheet) throw new Error('SavedMeals sheet not found');
+    const sheetId = sheet.properties.sheetId;
+    await gapi.client.sheets.spreadsheets.batchUpdate({
+      spreadsheetId: cfg.sheetId,
+      resource: {
+        requests: [{
+          deleteDimension: {
+            range: { sheetId, dimension: 'ROWS', startIndex: sheetRow-1, endIndex: sheetRow }
+          }
+        }]
+      }
+    });
+    await loadSavedMeals();
+  } catch(err) {
+    alert('Error deleting: ' + (err.result?.error?.message || err.message));
+  }
 }
 
-function renderToday(rows) {
-  const s = sum(rows);
-  document.getElementById('todayCalBig').textContent = Math.round(s.cal);
-  setBar('pCalBar','pCalText',s.cal,GOALS.cal,'',true);
-  setBar('pProtBar','pProtText',s.protein,GOALS.protein,'g',false);
-  setBar('pCarbBar','pCarbText',s.carbs,GOALS.carbs,'g',false);
-  setBar('pFatBar','pFatText',s.fat,GOALS.fat,'g',false);
-  document.getElementById('todayLog').innerHTML = rows.length ? rows.map(entryHTML).join('') : '<div class="empty-log">No entries yet</div>';
-}
-
-function renderHistory(date, rows) {
-  const el = document.getElementById('histContent');
-  const label = new Date(date+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
-  const isToday = date === formatDate(new Date());
-  const badge = isToday ? ' <span class="hist-badge">today</span>' : '';
-  const dateLabel = `<div style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted);margin-bottom:12px">${label}${badge}</div>`;
-
-  if (!rows.length) { el.innerHTML = dateLabel + '<div class="empty-log">No entries</div>'; return; }
-
-  const s = sum(rows);
-  const pct = Math.round(s.cal/GOALS.cal*100);
-  el.innerHTML = dateLabel + `
-    <div class="hist-summary">
-      <div class="hist-macro"><div class="hist-macro-label">Calories</div><div class="hist-macro-val" style="color:var(--accent)">${Math.round(s.cal)} <span style="font-size:0.68rem;color:var(--muted);font-weight:400">/ ${GOALS.cal} (${pct}%)</span></div></div>
-      <div class="hist-macro"><div class="hist-macro-label">Protein</div><div class="hist-macro-val" style="color:var(--protein)">${Math.round(s.protein)}g <span style="font-size:0.68rem;color:var(--muted);font-weight:400">/ ${GOALS.protein}g</span></div></div>
-      <div class="hist-macro"><div class="hist-macro-label">Carbs</div><div class="hist-macro-val" style="color:var(--carbs)">${Math.round(s.carbs)}g <span style="font-size:0.68rem;color:var(--muted);font-weight:400">/ ${GOALS.carbs}g</span></div></div>
-      <div class="hist-macro"><div class="hist-macro-label">Fat</div><div class="hist-macro-val" style="color:var(--fat)">${Math.round(s.fat)}g <span style="font-size:0.68rem;color:var(--muted);font-weight:400">/ ${GOALS.fat}g</span></div></div>
-    </div>
-    <div class="divider"></div>
-    <div class="card-title">${rows.length} entr${rows.length===1?'y':'ies'}</div>
-    ${rows.map(entryHTML).join('')}`;
-}
-
+// ── HELPERS ───────────────────────────────────────────────────
 function entryHTML(r) {
   return `<div class="log-entry">
     <div>
       <div class="log-entry-name">${r[2]||'—'}</div>
       <div class="log-entry-type">${r[1]||''}</div>
-      <div class="log-entry-macros">${r[4]||0}g P &middot; ${r[5]||0}g C &middot; ${r[6]||0}g F</div>
+      <div class="log-entry-macros">${r[4]||0}g P · ${r[5]||0}g C · ${r[6]||0}g F</div>
     </div>
     <div class="log-entry-cal">${r[3]||0} kcal</div>
   </div>`;
-}
-
-function changeHistDate(delta) {
-  const picker = document.getElementById('histDatePicker');
-  const d = picker.value ? new Date(picker.value+'T12:00:00') : new Date();
-  d.setDate(d.getDate()+delta);
-  if (d > new Date()) return;
-  picker.value = formatDate(d);
-  document.getElementById('histNext').disabled = formatDate(d) >= formatDate(new Date());
-  loadDate(picker.value, 'history');
 }
 
 function sum(rows) {
   const s = {cal:0,protein:0,carbs:0,fat:0};
   rows.forEach(r => { s.cal+=Number(r[3])||0; s.protein+=Number(r[4])||0; s.carbs+=Number(r[5])||0; s.fat+=Number(r[6])||0; });
   return s;
-}
-
-function setBar(barId, textId, val, goal, unit, isCal) {
-  document.getElementById(barId).style.width = Math.min(Math.round(val/goal*100),100)+'%';
-  const t = document.getElementById(textId);
-  t.textContent = isCal ? `${Math.round(val)} / ${goal}` : `${Math.round(val)} / ${goal}${unit}`;
-  t.classList.toggle('over', val > goal);
 }
 
 function formatDate(d) {
@@ -525,12 +614,11 @@ function setStatus(id, type, msg) {
 }
 
 function switchTab(name) {
-  ['log','today','history','settings'].forEach(t => {
+  ['log','history','meals','settings'].forEach(t => {
     document.getElementById('tab-'+t).classList.toggle('active', t===name);
     document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle('active', t===name);
   });
-  if (name==='today')   loadDate(formatDate(new Date()), 'today');
-  if (name==='history') loadDate(document.getElementById('histDatePicker').value||formatDate(new Date()), 'history');
+  if (name==='history') loadHistory();
 }
 
 window.addEventListener('load', init);
